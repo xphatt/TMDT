@@ -184,6 +184,16 @@ Tiêu chuẩn trải nghiệm:
 - Theo dõi trạng thái đơn hàng.
 - Đánh giá sản phẩm và mã giảm giá.
 
+## Thành viên nhóm
+
+| TT | Họ Tên | Email |
+|---|---|---|
+| 1 | Phạm Huy Hoàng | Hoangph0957@ut.edu.vn |
+| 2 | Đỗ Huỳnh Bình Khôi | Dhbkhoi@gmail.com |
+| 3 | Nguyễn Huy Phú | phunh310003@ut.edu.vn |
+| 4 | Nguyễn Đặng Xuân Phát | nguyendangxuanphat@gmail.com |
+| 5 | Tiêu Đình Bảo Khoa | khoa79074@gmail.com |
+| 6 | Trần Tuấn Khang | 08trantuankhang@gmail.com |
 
 ## License
 
