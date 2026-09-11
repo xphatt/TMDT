@@ -73,7 +73,7 @@ function Header({ cartCount, onNavigate, onOpenMenu }: { cartCount: number; onNa
 }
 
 function ProductPicture({ product, className = "" }: { product: Product; className?: string }) {
-  return <Image className={className} src={product.image} width={900} height={1100} style={{ objectPosition: product.imagePosition }} alt={`Ảnh ${product.name}`} />;
+  return <Image className={className} src={product.image} width={900} height={1100} sizes="(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 34vw" style={{ objectPosition: product.imagePosition }} alt={`Ảnh ${product.name}`} />;
 }
 
 function ProductCard({ product, featured = false, onSelect }: { product: Product; featured?: boolean; onSelect: (product: Product) => void }) {
@@ -112,8 +112,8 @@ function HomeView({ onOpenMenu, onSelectProduct }: { onOpenMenu: (category?: Cat
         </div>
         <div className="hero-stage">
           <div className="cup-ring" aria-hidden="true" />
-          <Image className="hero-atmosphere" src="/images/about-tea.png" width={1448} height={1086} priority alt="" aria-hidden="true" />
-          <Image className="hero-cup" src="/images/hero-brown-sugar.png" width={1122} height={1402} priority alt="Ly trà sữa đường đen với trân châu đen" />
+          <Image className="hero-atmosphere" src="/images/about-tea.png" width={1448} height={1086} sizes="(max-width: 767px) 100vw, 54vw" priority alt="" aria-hidden="true" />
+          <Image className="hero-cup" src="/images/hero-brown-sugar.png" width={1122} height={1402} sizes="(max-width: 767px) 72vw, 390px" priority alt="Ly trà sữa đường đen với trân châu đen" />
         </div>
         <div className="ingredient-counter" id="ingredients">
           <div><span className="ingredient-swatch ingredient-tea" aria-hidden="true" /><span><strong>Trà tuyển chọn</strong><small>Thơm chuẩn vị</small></span></div>
@@ -143,7 +143,7 @@ function HomeView({ onOpenMenu, onSelectProduct }: { onOpenMenu: (category?: Cat
       </section>
 
       <section className="home-section source-section" aria-labelledby="source-heading">
-        <div className="source-image"><Image src="/images/about-tea.png" width={1448} height={1086} alt="Lá trà, hoa nhài, ấm trà và trân châu trên bàn đá xanh" /></div>
+        <div className="source-image"><Image src="/images/about-tea.png" width={1448} height={1086} sizes="(max-width: 767px) 100vw, 52vw" alt="Lá trà, hoa nhài, ấm trà và trân châu trên bàn đá xanh" /></div>
         <div className="source-copy">
           <h2 id="source-heading">Ngon bắt đầu từ điều rõ ràng</h2>
           <p>Mỗi món mẫu đều ghi nền trà và thành phần chính. Khi chọn ly, giá thay đổi ngay theo size và topping.</p>
@@ -257,8 +257,9 @@ function ProductView({ product, onBack, onAdd }: { product: Product; onBack: () 
       window.setTimeout(() => errorRef.current?.focus(), 0);
       return;
     }
-    const key = [product.id, size, sugar, ice, ...selectedToppings.sort()].join("|");
-    onAdd({ key, productId: product.id, size, sugar, ice, toppings: selectedToppings, quantity, unitPrice });
+    const sortedToppings = [...selectedToppings].sort();
+    const key = [product.id, size, sugar, ice, ...sortedToppings].join("|");
+    onAdd({ key, productId: product.id, size, sugar, ice, toppings: sortedToppings, quantity, unitPrice });
   };
 
   return (
@@ -402,7 +403,10 @@ function CheckoutView({ items, onBack, onSuccess }: { items: CartItem[]; onBack:
   };
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!validate()) { document.getElementById("checkout-errors")?.focus(); return; }
+    if (!validate()) {
+      window.setTimeout(() => document.getElementById("checkout-errors")?.focus(), 0);
+      return;
+    }
     setSubmitting(true);
     setSubmitError("");
     try {

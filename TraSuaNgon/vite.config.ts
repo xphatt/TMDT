@@ -13,7 +13,6 @@ const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
 
 const localBindingConfig = {
   main: "./worker/index.ts",
-  compatibility_flags: ["nodejs_compat"],
   d1_databases: d1
     ? [
         {
@@ -44,9 +43,19 @@ export default defineConfig(async () => {
   const { cloudflare } = await import("@cloudflare/vite-plugin");
 
   return {
-    server: isCodexSeatbeltSandbox
-      ? { watch: { useFsEvents: false, usePolling: true } }
-      : undefined,
+    optimizeDeps: {
+      // Vinext loads this client shim through both RSC and browser environments;
+      // pre-bundling it in only one environment triggers an inconsistent-cache warning.
+      exclude: ["vinext/dist/shims/internal/app-prefetch-fetch-queue.js"],
+    },
+    server: {
+      // Bind every local interface so phones/tablets on the same trusted LAN
+      // can open the development preview. This does not publish the app.
+      host: "0.0.0.0",
+      ...(isCodexSeatbeltSandbox
+        ? { watch: { useFsEvents: false, usePolling: true } }
+        : {}),
+    },
     plugins: [
       vinext(),
       sites(),

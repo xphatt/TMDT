@@ -175,8 +175,8 @@ Bảng màu lấy jade làm khung, giấy và trà nhạt làm nền, chỉ dùn
 
 ## Typography
 
-**Display Font:** TSN Display với Trebuchet MS dự phòng  
-**Body Font:** Trebuchet MS với Segoe UI dự phòng  
+**Display Font:** TSN Display với Trebuchet MS dự phòng
+**Body Font:** Trebuchet MS với Segoe UI dự phòng
 **Label Font:** Trebuchet MS với Segoe UI dự phòng
 
 **Character:** Display có dáng tròn, đậm, hơi thủ công và dùng khoảng cách chữ âm để tạo wordmark chắc. Body giữ nhịp mở, ít kiểu chữ và ưu tiên khả năng quét nhanh trên tiếng Việt.

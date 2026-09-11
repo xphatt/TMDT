@@ -1,23 +1,11 @@
 import { deliveryFee, sizeSurcharge } from "../../data/pricing";
 import { products, toppings } from "../../data/products";
 import type { CartItem, CheckoutDetails, DrinkSize, IceLevel, SugarLevel } from "../../types";
-import { getPaymentProvider, type PaymentInstruction } from "../payments/payment-provider";
-import { orderRepository } from "./order-repository";
+import { getPaymentProvider } from "../payments/payment-provider";
+import { getOrderRepository } from "./order-repository-resolver";
+import type { OrderRecord } from "./order-types";
 
-export type OrderStatus = "pending" | "confirmed";
-
-export type OrderRecord = {
-  id: string;
-  createdAt: string;
-  confirmedAt: string | null;
-  status: OrderStatus;
-  customer: CheckoutDetails;
-  items: CartItem[];
-  subtotal: number;
-  deliveryFee: number;
-  total: number;
-  payment: PaymentInstruction;
-};
+export type { OrderRecord, OrderStatus } from "./order-types";
 
 export class OrderValidationError extends Error {
   constructor(public readonly fields: Record<string, string>) {
@@ -109,31 +97,42 @@ export async function createPendingOrder(payload: unknown): Promise<OrderRecord>
   const subtotal = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
   const id = `TSN${Date.now().toString().slice(-7)}${crypto.randomUUID().slice(0, 4).toUpperCase()}`;
   const provider = getPaymentProvider(customer.payment);
+  const now = new Date().toISOString();
+  const total = subtotal + deliveryFee;
   const order: OrderRecord = {
     id,
-    createdAt: new Date().toISOString(),
+    createdAt: now,
+    updatedAt: now,
     confirmedAt: null,
     status: "pending",
     customer,
     items,
     subtotal,
+    discountAmount: 0,
     deliveryFee,
-    total: subtotal + deliveryFee,
-    payment: provider.prepare(id),
+    total,
+    payment: provider.prepare(id, total),
+    version: 1,
   };
-  return orderRepository.create(order);
+  return getOrderRepository().create(order);
 }
 
 export async function confirmSimulatedOrder(id: string): Promise<OrderRecord> {
-  const current = await orderRepository.findById(id);
+  const repository = getOrderRepository();
+  const current = await repository.findById(id);
   if (!current) throw new OrderNotFoundError();
   if (current.status === "confirmed") return current;
+  if (current.status !== "pending") {
+    throw new OrderValidationError({ status: "Chỉ đơn đang chờ mới có thể được khách xác nhận." });
+  }
 
   const provider = getPaymentProvider(current.customer.payment);
-  return orderRepository.update({
+  return repository.update({
     ...current,
     status: "confirmed",
     confirmedAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     payment: provider.confirmSimulation(current.payment),
+    version: current.version + 1,
   });
 }

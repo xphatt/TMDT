@@ -1,18 +1,10 @@
 /** Cloudflare Worker entry point for the vinext-starter template. */
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
 import handler from "vinext/server/app-router-entry";
+import { withRuntimeBindings, type RuntimeBindings } from "../app/server/runtime-env";
 
-interface Env {
-  ASSETS: Fetcher;
-  DB: D1Database;
-  GEOAPIFY_API_KEY?: string;
-  IMAGES: {
-    input(stream: ReadableStream): {
-      transform(options: Record<string, unknown>): {
-        output(options: { format: string; quality: number }): Promise<{ response(): Response }>;
-      };
-    };
-  };
+interface Env extends RuntimeBindings {
+  IMAGES: NonNullable<RuntimeBindings["IMAGES"]>;
 }
 
 interface ExecutionContext {
@@ -41,7 +33,16 @@ const worker = {
       }, allowedWidths);
     }
 
-    return handler.fetch(request, env, ctx);
+    const response = await withRuntimeBindings(env, () => handler.fetch(request, env, ctx));
+    if (url.pathname.startsWith("/admin") || url.pathname.startsWith("/api/admin")) {
+      const headers = new Headers(response.headers);
+      headers.set("cache-control", "no-store");
+      headers.set("referrer-policy", "no-referrer");
+      headers.set("x-content-type-options", "nosniff");
+      headers.set("x-frame-options", "DENY");
+      return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+    }
+    return response;
   },
 };
 

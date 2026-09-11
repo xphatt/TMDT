@@ -9,9 +9,12 @@
     "dev": "vinext dev",
     "build": "vinext build",
     "start": "vinext start",
-    "test": "npm run build && node --test tests/rendered-html.test.mjs",
+    "test": "npm run build && node --test tests/rendered-html.test.mjs tests/ui-regression.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
-    "db:generate": "drizzle-kit generate"
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:local": "node --experimental-strip-types scripts/migrate-local.ts",
+    "admin:create": "node --experimental-strip-types scripts/create-admin.ts"
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",

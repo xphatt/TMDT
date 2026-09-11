@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-React 19 và TypeScript trên starter Sites/Vinext. Người dùng đã giao quyền chọn stack phù hợp với starter và xác nhận cài đúng dependency đi kèm starter.
+React 19 và TypeScript trên Vinext/Vite, build thành Cloudflare Worker-compatible ESM. Project giữ các file compatibility của starter hiện hữu, nhưng mục tiêu vận hành là Wrangler + Cloudflare Workers/D1 và chưa deploy.
 
 ## Users
 
@@ -24,7 +24,7 @@ Trải nghiệm mua trà sữa thân thiện, có cảm giác thủ công hiện
 
 ## Operating Context
 
-Luồng chính gồm trang chủ, danh mục, chi tiết sản phẩm, giỏ hàng, gợi ý địa chỉ Việt Nam, thanh toán mô phỏng và xác nhận đơn. Giỏ hàng là draft cục bộ; order lifecycle đi qua API nội bộ và lưu một receipt cục bộ sau khi xác nhận.
+Luồng khách gồm trang chủ, danh mục, chi tiết sản phẩm, giỏ hàng, gợi ý địa chỉ Việt Nam, thanh toán mô phỏng và xác nhận đơn. Giỏ hàng là draft cục bộ; đơn hàng bền vững qua D1. Luồng nội bộ gồm login admin, dashboard, sổ đơn, chi tiết, chuyển trạng thái, xác nhận COD và audit.
 
 ## Capabilities and Constraints
 
@@ -33,10 +33,11 @@ Luồng chính gồm trang chủ, danh mục, chi tiết sản phẩm, giỏ hà
 - Quản lý giỏ hàng và checkout có validation thân thiện.
 - Gợi ý địa chỉ qua Geoapify proxy phía server, có debounce và nhập tay dự phòng.
 - Hỗ trợ tiền mặt khi nhận hàng và giao diện chuyển khoản/QR mô phỏng.
-- API nội bộ tạo đơn `pending`, xác nhận thành `confirmed` và không tạo trạng thái `paid`.
-- Không có authentication, cổng thanh toán thật hoặc thu tiền thật.
+- API khách tạo đơn `pending`; admin vận hành state machine có kiểm soát và optimistic version.
+- Có đăng nhập admin nội bộ, session D1, phân quyền `admin`/`operator`, CSRF và rate limit; chưa có auth khách hàng.
+- Không có cổng thanh toán thật hoặc thu tiền tự động. Chỉ admin role được đánh dấu COD `paid` sau khi đang giao/hoàn tất; QR luôn `simulation_only`.
 - Dữ liệu, repository và payment provider được tách thành layer riêng để có thể thay bằng D1 và VNPay, MoMo hoặc ZaloPay sau này.
-- Order repository hiện là memory adapter cho local; persistence bền vững cần xác nhận trước khi đổi schema.
+- D1 là source of truth cho đơn hàng/admin; memory Adapter chỉ bật rõ bằng `ORDER_STORAGE=memory` cho test cô lập.
 - Chỉ chạy local, không publish hoặc deploy.
 
 ## Brand Commitments

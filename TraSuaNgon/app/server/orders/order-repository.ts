@@ -1,4 +1,4 @@
-import type { OrderRecord } from "./order-service";
+import type { OrderRecord } from "./order-types";
 
 export interface OrderRepository {
   create(order: OrderRecord): Promise<OrderRecord>;
@@ -29,4 +29,4 @@ class MemoryOrderRepository implements OrderRepository {
   }
 }
 
-export const orderRepository: OrderRepository = new MemoryOrderRepository();
+export const memoryOrderRepository: OrderRepository = new MemoryOrderRepository();

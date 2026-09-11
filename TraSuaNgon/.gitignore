@@ -1,51 +1,52 @@
-# Dependencies
-node_modules/
-.pnp
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
 .pnp.*
-.yarn/cache/
-.npm/
-.npm-cache/
-.pnpm-store/
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
 
-# Framework, build and test output
-.next/
-.vinext/
-dist/
-build/
-out/
-coverage/
-.wrangler/
-.vercel/
-outputs/
-work/
+# testing
+/coverage
+__pycache__/
+*.py[cod]
+*.tsbuildinfo
 
-# Environment and secrets
-.env*
-!.env.example
+# next.js
+/.next/
+/.vinext/
+/out/
+
+# misc
+.DS_Store
 *.pem
-*.key
 
-# Local databases
-*.db
-*.sqlite
-*.sqlite3
-
-# Logs, archives and temporary files
-*.log
-*.zip
-*.tmp
-*.temp
-*.bak
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
+.pnpm-debug.log*
+/.dev-server.*.log
 
-# Editor and operating-system files
-.DS_Store
-Thumbs.db
-Desktop.ini
-.idea/
-.vscode/
-*.swp
-*.swo
+# env files (can opt-in for committing if needed)
+.env*
+!.env.example
+
+# vercel
+.vercel
+
+/dist/
+/.wrangler/
+/outputs/
+/work/
+/.npm-cache/
+
+# local handoff and generated report artifacts
+/deliverables/
+/docs/report-assets/rendered-pages*/
+/docs/report-assets/qa-contact*/
+/docs/report-assets/*-preview-v*.pdf
