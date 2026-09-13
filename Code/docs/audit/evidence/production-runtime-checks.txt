@@ -1,0 +1,8 @@
+Production server http://127.0.0.1:3100
+/ HTTP 200
+/admin HTTP 307
+/api/menu HTTP 200
+/images/hero-brown-sugar.png HTTP 200
+/images/product-lineup.png HTTP 200
+/images/about-tea.png HTTP 200
+/images/og.png HTTP 200

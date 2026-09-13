@@ -1,0 +1,24 @@
+
+> tra-sua-ngon-storefront@0.1.0 dev
+> vinext dev --host 0.0.0.0
+
+
+  vinext dev  (Vite 8.0.13)
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: http://192.168.1.9:3000/
+  ➜  Debug:   http://localhost:3000/__debug
+ GET / 200 in 1.8s (compile: 1789304141.2s, render: 1.6s)
+ GET / 200 in 88ms (compile: 1789304141.0s, render: 64ms)
+ GET / 200 in 111ms (compile: 1789304141.1s, render: 42ms)
+ GET / 200 in 115ms (compile: 1789304141.1s, render: 59ms)
+ GET / 200 in 965ms (compile: 1789304141.7s, render: 225ms)
+ GET /api/address-suggestions?q=123%20Nguy%E1%BB%85n 503 in 2.3s
+ GET /admin 307 in 1.5s
+ GET /admin/login?returnTo=%2Fadmin 200 in 285ms (compile: 1789304141.1s, render: 165ms)
+ GET /api/menu 200 in 1.9s
+ GET /api/address-suggestions?q=123%20Nguyen 503 in 36ms
+ GET /api/admin/dashboard 401 in 170ms
+ HEAD /admin 307 in 123ms
+ GET / 200 in 299ms (compile: 1789304141.2s, render: 114ms)
+ GET /admin/login 200 in 153ms (compile: 1789304141.1s, render: 99ms)

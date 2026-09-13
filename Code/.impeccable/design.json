@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-16T22:49:27.2462793+07:00",
+  "title": "Design System: Trà Sữa Ngon",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Giấy Lạnh",
+        "tonalRamp": ["oklch(15% 0.007 97.4)", "oklch(27% 0.007 97.4)", "oklch(39% 0.007 97.4)", "oklch(51% 0.007 97.4)", "oklch(63% 0.007 97.4)", "oklch(75% 0.007 97.4)", "oklch(87% 0.007 97.4)", "oklch(95% 0.007 97.4)"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Men Kem",
+        "tonalRamp": ["oklch(15% 0.007 97.3)", "oklch(27% 0.007 97.3)", "oklch(39% 0.007 97.3)", "oklch(51% 0.007 97.3)", "oklch(63% 0.007 97.3)", "oklch(75% 0.007 97.3)", "oklch(87% 0.007 97.3)", "oklch(95% 0.007 97.3)"]
+      },
+      "jade-950": {
+        "role": "primary",
+        "displayName": "Ngọc Rừng Sâu",
+        "tonalRamp": ["oklch(15% 0.061 169.7)", "oklch(27% 0.061 169.7)", "oklch(39% 0.061 169.7)", "oklch(51% 0.061 169.7)", "oklch(63% 0.061 169.7)", "oklch(75% 0.061 169.7)", "oklch(87% 0.061 169.7)", "oklch(95% 0.061 169.7)"]
+      },
+      "jade-900": {
+        "role": "primary",
+        "displayName": "Ngọc Quầy Trà",
+        "tonalRamp": ["oklch(15% 0.075 167)", "oklch(27% 0.075 167)", "oklch(39% 0.075 167)", "oklch(51% 0.075 167)", "oklch(63% 0.075 167)", "oklch(75% 0.075 167)", "oklch(87% 0.075 167)", "oklch(95% 0.075 167)"]
+      },
+      "jade-700": {
+        "role": "primary",
+        "displayName": "Lá Trà Sáng",
+        "tonalRamp": ["oklch(15% 0.081 168.8)", "oklch(27% 0.081 168.8)", "oklch(39% 0.081 168.8)", "oklch(51% 0.081 168.8)", "oklch(63% 0.081 168.8)", "oklch(75% 0.081 168.8)", "oklch(87% 0.081 168.8)", "oklch(95% 0.081 168.8)"]
+      },
+      "jade-150": {
+        "role": "secondary",
+        "displayName": "Sương Ngọc",
+        "tonalRamp": ["oklch(15% 0.021 145.4)", "oklch(27% 0.021 145.4)", "oklch(39% 0.021 145.4)", "oklch(51% 0.021 145.4)", "oklch(63% 0.021 145.4)", "oklch(75% 0.021 145.4)", "oklch(87% 0.021 145.4)", "oklch(95% 0.021 145.4)"]
+      },
+      "tea-100": {
+        "role": "secondary",
+        "displayName": "Nước Trà Non",
+        "tonalRamp": ["oklch(15% 0.023 117.6)", "oklch(27% 0.023 117.6)", "oklch(39% 0.023 117.6)", "oklch(51% 0.023 117.6)", "oklch(63% 0.023 117.6)", "oklch(75% 0.023 117.6)", "oklch(87% 0.023 117.6)", "oklch(95% 0.023 117.6)"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Mực Trà",
+        "tonalRamp": ["oklch(15% 0.031 170.1)", "oklch(27% 0.031 170.1)", "oklch(39% 0.031 170.1)", "oklch(51% 0.031 170.1)", "oklch(63% 0.031 170.1)", "oklch(75% 0.031 170.1)", "oklch(87% 0.031 170.1)", "oklch(95% 0.031 170.1)"]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Mực Lá Nhạt",
+        "tonalRamp": ["oklch(15% 0.026 167.8)", "oklch(27% 0.026 167.8)", "oklch(39% 0.026 167.8)", "oklch(51% 0.026 167.8)", "oklch(63% 0.026 167.8)", "oklch(75% 0.026 167.8)", "oklch(87% 0.026 167.8)", "oklch(95% 0.026 167.8)"]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Chỉ Ngọc",
+        "tonalRamp": ["oklch(15% 0.017 156.9)", "oklch(27% 0.017 156.9)", "oklch(39% 0.017 156.9)", "oklch(51% 0.017 156.9)", "oklch(63% 0.017 156.9)", "oklch(75% 0.017 156.9)", "oklch(87% 0.017 156.9)", "oklch(95% 0.017 156.9)"]
+      },
+      "orange": {
+        "role": "tertiary",
+        "displayName": "Quýt Chín",
+        "tonalRamp": ["oklch(15% 0.171 41.3)", "oklch(27% 0.171 41.3)", "oklch(39% 0.171 41.3)", "oklch(51% 0.171 41.3)", "oklch(63% 0.171 41.3)", "oklch(75% 0.171 41.3)", "oklch(87% 0.171 41.3)", "oklch(95% 0.171 41.3)"]
+      },
+      "orange-hover": {
+        "role": "tertiary",
+        "displayName": "Vỏ Quýt Rang",
+        "tonalRamp": ["oklch(15% 0.153 40.3)", "oklch(27% 0.153 40.3)", "oklch(39% 0.153 40.3)", "oklch(51% 0.153 40.3)", "oklch(63% 0.153 40.3)", "oklch(75% 0.153 40.3)", "oklch(87% 0.153 40.3)", "oklch(95% 0.153 40.3)"]
+      },
+      "focus": {
+        "role": "tertiary",
+        "displayName": "Ánh Quýt",
+        "tonalRamp": ["oklch(15% 0.169 48.2)", "oklch(27% 0.169 48.2)", "oklch(39% 0.169 48.2)", "oklch(51% 0.169 48.2)", "oklch(63% 0.169 48.2)", "oklch(75% 0.169 48.2)", "oklch(87% 0.169 48.2)", "oklch(95% 0.169 48.2)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero và tiêu đề trang có vai trò nhận diện mạnh." },
+      "headline": { "displayName": "Headline", "purpose": "Tiêu đề section kể chuyện và mốc điều hướng lớn." },
+      "product-title": { "displayName": "Product Title", "purpose": "Tên món trong card và chi tiết sản phẩm." },
+      "body": { "displayName": "Body", "purpose": "Mô tả, hướng dẫn và nội dung biểu mẫu." },
+      "label": { "displayName": "Label", "purpose": "Tag, nhãn điều khiển và metadata ngắn." }
+    },
+    "shadows": [
+      { "name": "header-ambient", "value": "0 8px 28px rgb(7 63 48 / 0.08)", "purpose": "Tách header nổi nhẹ khỏi nền giấy." },
+      { "name": "menu-floating", "value": "0 14px 36px rgb(7 63 48 / 0.16)", "purpose": "Dành cho menu mobile mở trên nội dung." },
+      { "name": "toast-floating", "value": "0 12px 34px rgb(7 63 48 / 0.24)", "purpose": "Giữ toast rõ trên mọi nền mà không dùng shadow đen." },
+      { "name": "ingredient-inset", "value": "inset 0 1px 0 rgb(255 255 255 / 0.16), inset 0 -12px 22px rgb(0 28 19 / 0.2)", "purpose": "Tạo vật liệu đá jade cho quầy nguyên liệu." },
+      { "name": "tray-inset", "value": "inset 0 2px 0 #b48558, 0 8px 18px rgb(58 34 15 / 0.14)", "purpose": "Tạo mép sáng và độ nâng nhẹ cho khay danh mục gỗ." }
+    ],
+    "motion": [
+      { "name": "state-fast", "value": "180ms ease", "purpose": "Hover và active của button cùng category control." },
+      { "name": "image-reveal", "value": "350ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Phóng ảnh sản phẩm rất nhẹ khi hover." },
+      { "name": "hero-copy-rise", "value": "620ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Đưa copy hero lên theo từng nhịp." },
+      { "name": "hero-cup-rise", "value": "780ms cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Nâng ly hero vào sân khấu." },
+      { "name": "skeleton-shift", "value": "1200ms ease-in-out infinite", "purpose": "Phản hồi loading khi người dùng chưa bật reduced motion." }
+    ],
+    "breakpoints": [
+      { "name": "mobile-max", "value": "767px" },
+      { "name": "compact-nav-max", "value": "850px" },
+      { "name": "tablet-max", "value": "1100px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Hành động quyết định, dùng tối đa một điểm cam nổi bật trong mỗi vùng.",
+      "html": "<button class=\"ds-btn-primary\" type=\"button\">Đặt ngay</button>",
+      "css": ".ds-btn-primary { min-height: 50px; padding: 0 24px; border: 1px solid transparent; border-radius: 999px; background: var(--orange); color: #fffaf4; font-family: \"Trebuchet MS\", \"Segoe UI\", sans-serif; font-weight: 900; cursor: pointer; transition: transform 180ms ease, background-color 180ms ease; } .ds-btn-primary:hover { background: var(--orange-hover); } .ds-btn-primary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; } .ds-btn-primary:active { transform: translateY(1px) scale(0.985); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Hành động phụ rõ ràng nhưng không cạnh tranh với CTA cam.",
+      "html": "<button class=\"ds-btn-secondary\" type=\"button\">Xem nguyên liệu</button>",
+      "css": ".ds-btn-secondary { min-height: 50px; padding: 0 24px; border: 1px solid var(--jade-900); border-radius: 999px; background: transparent; color: var(--jade-950); font-family: \"Trebuchet MS\", \"Segoe UI\", sans-serif; font-weight: 900; cursor: pointer; transition: transform 180ms ease, background-color 180ms ease; } .ds-btn-secondary:hover { background: var(--tea-100); } .ds-btn-secondary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; } .ds-btn-secondary:active { transform: translateY(1px) scale(0.985); }"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "filter-chip",
+      "description": "Bộ lọc danh mục dạng pill với trạng thái chọn tương phản cao.",
+      "html": "<div class=\"ds-chip-row\"><button class=\"ds-chip ds-chip-active\" type=\"button\" aria-pressed=\"true\">Tất cả</button><button class=\"ds-chip\" type=\"button\" aria-pressed=\"false\">Trà sữa</button></div>",
+      "css": ".ds-chip-row { display: flex; flex-wrap: wrap; gap: 8px; } .ds-chip { min-height: 44px; padding: 0 18px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--jade-950); font-family: \"Trebuchet MS\", \"Segoe UI\", sans-serif; font-weight: 800; cursor: pointer; } .ds-chip:hover { background: var(--tea-100); } .ds-chip:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; } .ds-chip-active { border-color: var(--jade-900); background: var(--jade-900); color: var(--surface); } .ds-chip-active:hover { background: var(--jade-950); }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "text-field",
+      "description": "Trường nhập lớn, nhãn đậm và trạng thái focus dễ thấy trên màn hình cảm ứng.",
+      "html": "<label class=\"ds-field\" for=\"ds-search\"><span>Tìm theo tên</span><input id=\"ds-search\" type=\"search\" value=\"Trà đào\"></label>",
+      "css": ".ds-field { display: grid; gap: 8px; color: var(--jade-950); font-family: \"Trebuchet MS\", \"Segoe UI\", sans-serif; font-weight: 900; } .ds-field input { width: 100%; min-height: 52px; padding: 12px 14px; border: 1px solid #9eb1a6; border-radius: 10px; background: var(--surface); color: var(--ink); font: inherit; font-weight: 400; } .ds-field input:hover { border-color: var(--jade-700); } .ds-field input:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }"
+    },
+    {
+      "name": "Site Navigation",
+      "kind": "nav",
+      "refersTo": "navigation",
+      "description": "Một hàng điều hướng Men Kem với wordmark nặng và trạng thái giỏ hàng ở cuối.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Điều hướng mẫu\"><strong>Trà Sữa Ngon</strong><div><button type=\"button\">Trà sữa</button><button type=\"button\">Trà trái cây</button></div><button class=\"ds-cart\" type=\"button\">Giỏ hàng <span>2</span></button></nav>",
+      "css": ".ds-nav { min-height: 72px; padding: 0 18px 0 24px; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 32px; border: 1px solid var(--line); border-radius: 16px; background: rgb(255 254 249 / 0.96); color: var(--jade-950); box-shadow: 0 8px 28px rgb(7 63 48 / 0.08); font-family: \"Trebuchet MS\", \"Segoe UI\", sans-serif; } .ds-nav strong { font-family: \"TSN Display\", \"Trebuchet MS\", sans-serif; font-size: 1.5rem; font-weight: 900; letter-spacing: -0.045em; } .ds-nav > div { display: flex; justify-content: center; gap: 24px; } .ds-nav button { min-height: 44px; border: 0; background: transparent; color: inherit; font-weight: 800; cursor: pointer; } .ds-nav button:hover { color: var(--jade-700); } .ds-nav button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; } .ds-cart { padding: 0 16px; border: 1px solid var(--jade-900) !important; border-radius: 999px; } .ds-cart span { display: inline-grid; min-width: 24px; height: 24px; margin-left: 6px; place-items: center; border-radius: 50%; background: var(--jade-900); color: var(--surface); }"
+    },
+    {
+      "name": "Product Card",
+      "kind": "card",
+      "refersTo": "product-card",
+      "description": "Card món có ảnh chiếm ưu thế, tag nhỏ, giá rõ và hành động dạng text.",
+      "html": "<article class=\"ds-product-card\"><div class=\"ds-product-image\" aria-hidden=\"true\"></div><div class=\"ds-product-copy\"><span class=\"ds-product-tag\">Bán chạy</span><h3>Trà Sữa Truyền Thống</h3><p>Hương trà đậm đà, sữa béo hài hoà.</p><footer><strong>39.000đ</strong><button type=\"button\">Chọn món</button></footer></div></article>",
+      "css": ".ds-product-card { display: grid; grid-template-columns: minmax(150px, 0.9fr) minmax(170px, 1.1fr); overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); color: var(--ink); font-family: \"Trebuchet MS\", \"Segoe UI\", sans-serif; } .ds-product-image { min-height: 230px; background: radial-gradient(circle at 58% 62%, #2f1d13 0 9%, transparent 10%), linear-gradient(145deg, var(--tea-100), #dbc49e); transition: transform 350ms cubic-bezier(0.16, 1, 0.3, 1); } .ds-product-card:hover .ds-product-image { transform: scale(1.025); } .ds-product-copy { padding: 24px; display: flex; flex-direction: column; justify-content: center; } .ds-product-tag { align-self: start; padding: 5px 9px; border-radius: 999px; background: #fbe2ce; color: #7f320a; font-size: 0.75rem; font-weight: 900; } .ds-product-copy h3 { margin: 10px 0 0; color: var(--jade-950); font-size: 1.5rem; line-height: 1.15; letter-spacing: -0.025em; } .ds-product-copy p { margin: 12px 0 0; color: var(--muted); line-height: 1.55; } .ds-product-copy footer { margin-top: 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; } .ds-product-copy footer button { min-height: 42px; padding: 0; border: 0; border-bottom: 1px solid currentColor; background: transparent; color: var(--jade-900); font-weight: 900; cursor: pointer; } .ds-product-copy footer button:hover { color: var(--jade-700); } .ds-product-copy footer button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }"
+    },
+    {
+      "name": "Choice Tile",
+      "kind": "custom",
+      "refersTo": "choice-tile",
+      "description": "Lựa chọn size hoặc mức vị dùng tile lớn và selected state hai lớp.",
+      "html": "<div class=\"ds-choice-grid\" role=\"radiogroup\" aria-label=\"Chọn size\"><button class=\"ds-choice ds-choice-selected\" type=\"button\" role=\"radio\" aria-checked=\"true\"><strong>M</strong><small>Giá gốc</small></button><button class=\"ds-choice\" type=\"button\" role=\"radio\" aria-checked=\"false\"><strong>L</strong><small>+7.000đ</small></button></div>",
+      "css": ".ds-choice-grid { display: grid; grid-template-columns: repeat(2, minmax(92px, 1fr)); gap: 8px; } .ds-choice { min-height: 60px; padding: 10px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--jade-950); font-family: \"Trebuchet MS\", \"Segoe UI\", sans-serif; cursor: pointer; } .ds-choice small { margin-top: 4px; color: var(--muted); } .ds-choice:hover { background: var(--tea-100); } .ds-choice:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; } .ds-choice-selected { border-color: var(--jade-900); background: var(--tea-100); box-shadow: inset 0 0 0 1px var(--jade-900); }"
+    },
+    {
+      "name": "Quantity Stepper",
+      "kind": "custom",
+      "refersTo": "stepper",
+      "description": "Control số lượng dạng pill, ba vùng cân bằng và số dùng tabular numerals.",
+      "html": "<div class=\"ds-stepper\" role=\"group\" aria-label=\"Số lượng\"><button type=\"button\" aria-label=\"Giảm số lượng\">−</button><output>1</output><button type=\"button\" aria-label=\"Tăng số lượng\">+</button></div>",
+      "css": ".ds-stepper { display: inline-grid; grid-template-columns: 44px 46px 44px; align-items: center; overflow: hidden; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--jade-950); font-family: \"Trebuchet MS\", \"Segoe UI\", sans-serif; } .ds-stepper button { min-height: 44px; border: 0; background: transparent; color: inherit; font-size: 1.25rem; font-weight: 900; cursor: pointer; } .ds-stepper button:hover { background: var(--tea-100); } .ds-stepper button:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; } .ds-stepper button:active { background: var(--jade-150); } .ds-stepper output { text-align: center; font-variant-numeric: tabular-nums; font-weight: 900; }"
+    },
+    {
+      "name": "Ingredient Counter",
+      "kind": "custom",
+      "refersTo": "ingredient-counter",
+      "description": "Signature component biến thông tin nguyên liệu thành một mặt quầy jade có nhịp ba phần.",
+      "html": "<section class=\"ds-ingredient-counter\" aria-label=\"Điểm nổi bật nguyên liệu\"><div><i class=\"ds-swatch ds-swatch-tea\" aria-hidden=\"true\"></i><span><strong>Trà tuyển chọn</strong><small>Thơm chuẩn vị</small></span></div><div><i class=\"ds-swatch ds-swatch-pearl\" aria-hidden=\"true\"></i><span><strong>Trân châu dai ngon</strong><small>Nấu mới mỗi ngày</small></span></div><div><i class=\"ds-swatch ds-swatch-sugar\" aria-hidden=\"true\"></i><span><strong>Vị ngọt vừa ý</strong><small>Chọn từ 0% đến 100%</small></span></div></section>",
+      "css": ".ds-ingredient-counter { padding: 18px 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; align-items: center; border-radius: 10px; background: linear-gradient(95deg, rgb(5 59 43 / 0.94), rgb(10 73 54 / 0.87)); color: var(--paper); box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.16), inset 0 -12px 22px rgb(0 28 19 / 0.2); font-family: \"Trebuchet MS\", \"Segoe UI\", sans-serif; } .ds-ingredient-counter > div { min-width: 0; padding-right: 12px; display: grid; grid-template-columns: 54px 1fr; gap: 12px; align-items: center; border-right: 1px solid rgb(255 255 255 / 0.28); } .ds-ingredient-counter > div:last-child { border-right: 0; } .ds-ingredient-counter strong, .ds-ingredient-counter small { display: block; } .ds-ingredient-counter strong { font-size: 0.82rem; line-height: 1.2; } .ds-ingredient-counter small { margin-top: 5px; color: var(--jade-150); font-size: 0.7rem; line-height: 1.25; } .ds-swatch { width: 54px; aspect-ratio: 1; border: 2px solid rgb(255 255 255 / 0.7); border-radius: 50%; background: radial-gradient(circle at 42% 38%, #d4be8a, #44755b 65%, #173d30); box-shadow: 0 4px 12px rgb(0 0 0 / 0.2); } .ds-swatch-pearl { background: radial-gradient(circle at 35% 30%, #6a4a31 0 8%, #17110d 9% 28%, #7a573b 29% 36%, #15100c 37% 58%, #b29168 59%); } .ds-swatch-sugar { background: linear-gradient(135deg, #e4ad63, #7d3c19); } .ds-ingredient-counter:focus-within { outline: 3px solid var(--focus); outline-offset: 3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Quầy Trà Ngọc Thủ Công",
+    "overview": "Trà Sữa Ngon mang cảm giác của một quầy trà Việt hiện đại được dựng từ giấy ngà lạnh, đá ngọc xanh và gỗ ấm. Hệ thống thân thiện, tươi và thủ công, nhưng mọi chi tiết vẫn phục vụ việc đọc giá, chọn tuỳ chỉnh và hoàn tất đơn nhanh trên màn hình cảm ứng.\n\nThị giác có nhịp rộng và giàu hình ảnh ở các điểm kể chuyện, sau đó trở nên gọn, đều và trực dụng trong các luồng vận hành. Quầy nguyên liệu jade, các vòng ly mảnh và chấm trân châu thưa là dấu hiệu nhận diện; đường viền nhẹ và mảng màu phẳng giữ giao diện sạch. Hệ thống loại bỏ gradient tím kiểu AI, glassmorphism, shadow nặng và các dãy card đồng hạng lặp lại.",
+    "keyCharacteristics": [
+      "Nền giấy ngà lạnh với bề mặt trắng kem, tạo độ ấm mà không ngả vàng.",
+      "Jade đậm dựng cấu trúc, xanh trà tạo lớp dịu, cam quýt dành cho hành động quyết định.",
+      "Display tròn, nặng và sít chữ cho thương hiệu; body rõ ràng, dễ đọc cho thao tác.",
+      "Bố cục quầy trà bất đối xứng, xen các mảng ảnh lớn với cụm điều khiển chặt chẽ.",
+      "Trạng thái chọn, focus, lỗi và giảm chuyển động luôn hiển thị rõ."
+    ],
+    "rules": [
+      { "name": "The One Mandarin Rule", "body": "Cam quýt chỉ đánh dấu hành động quyết định hoặc một điểm nhấn trạng thái nhỏ; không dùng nó để phủ cả section hay cạnh tranh với jade.", "section": "colors" },
+      { "name": "The Jade Structure Rule", "body": "Jade mang cấu trúc, trạng thái chọn và nhận diện; không biến mọi bề mặt thành một mảng xanh đặc.", "section": "colors" },
+      { "name": "The Heavy Headline Rule", "body": "Display và tiêu đề dùng trọng lượng 900 cùng tracking âm; body không bắt chước độ nén đó.", "section": "typography" },
+      { "name": "The Flat by Default Rule", "body": "Card nội dung đứng yên bằng màu và viền; shadow chỉ dành cho lớp nổi, phản hồi trạng thái hoặc vật thể có vai trò sân khấu.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do dùng jade để dựng thứ bậc, trạng thái chọn và nhận diện xuyên suốt luồng mua hàng.",
+      "Do giữ CTA chính màu cam quýt hiếm, rõ và có nhãn hành động cụ thể.",
+      "Do xen một bề mặt hình ảnh lớn với các nhóm thông tin gọn thay vì lặp các card bằng nhau.",
+      "Do giữ control chạm cao ít nhất 44px, focus nhìn thấy rõ và hỗ trợ reduced motion.",
+      "Do dùng trạng thái lỗi, trống, loading và xác nhận có hướng dẫn trực tiếp."
+    ],
+    "donts": [
+      "Don't dùng gradient tím kiểu AI, glassmorphism hoặc shadow đen nặng.",
+      "Don't phủ cam lên section lớn hay dùng nhiều CTA cam cạnh tranh trong cùng một vùng.",
+      "Don't biến mọi nội dung thành card hoặc lặp ba card đồng hạng như một công thức mặc định.",
+      "Don't dùng pill cho card, trường nhập hoặc container nội dung.",
+      "Don't đưa bằng chứng thương mại, testimonial hoặc số liệu không có nguồn vào giao diện."
+    ]
+  }
+}

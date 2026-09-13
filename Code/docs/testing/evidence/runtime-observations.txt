@@ -1,0 +1,5 @@
+Phiên kiểm thử: 13/09/2026 (Asia/Saigon)
+Server do lượt kiểm thử sử dụng: http://localhost:3001
+Lý do không dùng 3000: cổng đã bị tiến trình có sẵn chiếm; không dừng tiến trình không do lượt này tạo.
+Trình duyệt tương tác: Codex in-app browser (Chromium).
+Trạng thái: đang thu thập bằng chứng; file sẽ được hoàn thiện ở cuối lượt kiểm thử.

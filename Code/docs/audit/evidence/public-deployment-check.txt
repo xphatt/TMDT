@@ -1,0 +1,2 @@
+Checked URL: https://trasuangon.com/
+CURL_EXIT=6

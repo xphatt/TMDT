@@ -1,0 +1,88 @@
+
+> tra-sua-ngon-storefront@0.1.0 test
+> npm run build && node --test tests/rendered-html.test.mjs tests/ui-regression.test.mjs
+
+
+> tra-sua-ngon-storefront@0.1.0 build
+> vinext build
+
+
+  vinext build  (Vite 8.0.13)
+
+[1/5] analyze client references...
+[2K
+transforming...✓ 373 modules transformed.
+rendering chunks...
+✓ built in 2.57s
+[2/5] analyze server references...
+[2K
+transforming...✓ 131 modules transformed.
+rendering chunks...
+✓ built in 385ms
+[3/5] build rsc environment...
+[2K
+transforming...✓ 371 modules transformed.
+rendering chunks...
+computing gzip size...
+✓ built in 832ms
+[4/5] build client environment...
+[2K
+transforming...✓ 172 modules transformed.
+rendering chunks...
+computing gzip size...
+✓ built in 793ms
+[5/5] build ssr environment...
+[2K
+transforming...✓ 137 modules transformed.
+rendering chunks...
+computing gzip size...
+✓ built in 567ms
+[0m
+  Route (app)
+  ┌ ? /                                              
+  ├ ƒ /admin                                         
+  ├ ƒ /admin/login                                   
+  ├ ƒ /admin/orders                                  
+  ├ ƒ /admin/orders/:id                              
+  ├ λ /api/address-suggestions                       
+  ├ λ /api/admin/auth/login                          
+  ├ λ /api/admin/auth/logout                         
+  ├ λ /api/admin/auth/session                        
+  ├ λ /api/admin/dashboard                           
+  ├ λ /api/admin/orders                              
+  ├ λ /api/admin/orders/:id                          
+  ├ λ /api/admin/orders/:id/payments/cod-confirmation
+  ├ λ /api/admin/orders/:id/status                   
+  ├ λ /api/menu                                      
+  ├ λ /api/orders                                    
+  └ λ /api/orders/:id/confirm                        
+
+  λ API  ƒ Dynamic  ? Unknown
+
+  ? Some routes could not be classified. vinext currently uses static analysis
+    and cannot detect dynamic API usage (headers(), cookies(), etc.) at build time.
+    Automatic classification will be improved in a future release.
+
+  Build complete. Run `vinext start` to start the production server.
+
+✔ server renders the Trà Sữa Ngon storefront (96.4603ms)
+✔ robots and sitemap expose the configured local canonical origin (3.0247ms)
+✔ menu endpoint exposes only internal catalogue and pricing data (9.2432ms)
+✔ address endpoint rejects short queries and missing configuration safely (5.8716ms)
+✔ address endpoint filters Vietnam, limits to five and returns minimal fields (3.662ms)
+✔ address endpoint supports empty results and masks Geoapify failures (7.7314ms)
+✔ order API recalculates internal prices and confirms without paid status (180.5132ms)
+✔ order API rejects missing address and unknown catalogue items (4.4448ms)
+✔ Geoapify secret is absent from client bundle and env files are protected (16.4257ms)
+✔ admin routes require authentication and login rate limiting does not reveal accounts (485.2339ms)
+✔ admin can search orders, enforce transitions, confirm COD and produce audit history (997.4248ms)
+✔ keyboard focus remains visible and checkout errors receive focus after render (0.7453ms)
+✔ the closed admin drawer is not focusable and mobile navigation targets stay tappable (0.3089ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3845.4854

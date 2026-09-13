@@ -1,0 +1,21 @@
+:root {
+  color-scheme: light;
+  background: #f2f4ee;
+}
+
+html {
+  min-width: 320px;
+  background: #f2f4ee;
+}
+
+body {
+  min-height: 100dvh;
+  margin: 0;
+  background: #f2f4ee;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
