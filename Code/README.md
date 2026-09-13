@@ -2,6 +2,27 @@
 
 Website thương mại điện tử responsive bằng tiếng Việt cho thương hiệu trà sữa hư cấu `Trà Sữa Ngon`. Dự án dùng React 19, TypeScript, Vinext/Vite và Cloudflare Workers/D1.
 
+## Thành viên nhóm
+
+| TT | Họ tên | Email |
+|---:|---|---|
+| 1 | Phạm Huy Hoàng | [Hoangph0957@ut.edu.vn](mailto:Hoangph0957@ut.edu.vn) |
+| 2 | Đỗ Huỳnh Bình Khôi | [Dhbkhoi@gmail.com](mailto:Dhbkhoi@gmail.com) |
+| 3 | Nguyễn Huy Phú | [phunh310003@ut.edu.vn](mailto:phunh310003@ut.edu.vn) |
+| 4 | Nguyễn Đặng Xuân Phát | [nguyendangxuanphat@gmail.com](mailto:nguyendangxuanphat@gmail.com) |
+| 5 | Tiêu Đình Bảo Khoa | [khoa79074@gmail.com](mailto:khoa79074@gmail.com) |
+| 6 | Trần Tuấn Khang | [08trantuankhang@gmail.com](mailto:08trantuankhang@gmail.com) |
+
+## Tính năng chính
+
+- Tìm kiếm tiếng Việt có dấu hoặc không dấu, lọc danh mục và sắp xếp sản phẩm.
+- Tùy chỉnh size, đường, đá, topping; giỏ hàng được lưu cục bộ.
+- Checkout với COD hoặc QR mô phỏng; Server luôn tính lại giá và chống tạo đơn trùng.
+- Liên hệ, feedback, đánh giá sản phẩm, khuyến mãi và ba trang chính sách.
+- Gợi ý địa chỉ Việt Nam qua Geoapify proxy và Google Maps khi có địa chỉ cửa hàng đã xác nhận.
+- Quản trị nội bộ cho catalogue, khuyến mãi, đơn hàng, COD, feedback và bình luận.
+- Responsive, thao tác bàn phím, focus rõ và hỗ trợ `prefers-reduced-motion`.
+
 ## Chạy local
 
 Yêu cầu Node.js `22.13.0` trở lên.
@@ -89,6 +110,8 @@ Khi build/deploy production được phê duyệt, đặt `SITE_URL=https://<wor
 ## Cấu trúc
 
 ```text
+.hosting/hosting.json       Cấu hình binding ứng dụng dùng khi build local
+.openai/hosting.json        File tương thích bắt buộc của Sites
 app/
   admin/                      Login, dashboard, danh sách và chi tiết đơn
   api/admin/                  Authentication và API vận hành đơn hàng
@@ -187,7 +210,7 @@ Checkout chỉ là mô phỏng. Dự án không tích hợp cổng thanh toán, 
 
 ## Kiểm thử đã thực hiện
 
-- Production build, lint và type check chạy thành công trên Windows. Bộ cuối có 5 unit test cùng 18 integration/rendered/UI test; toàn bộ 23/23 PASS và giữ nguyên 13 test nền.
+- Production build, lint và type check chạy thành công trên Windows. Bộ cuối có 7 unit test cùng 19 integration/rendered/UI test; toàn bộ 26/26 PASS và giữ nguyên 13 test nền.
 - Test bao phủ Geoapify hợp lệ tại Việt Nam, tối đa 5 kết quả, empty, lỗi mạng, thiếu key, sai key, validation địa chỉ, internal pricing, topping, COD, QR mô phỏng và secret scan trên frontend bundle.
 - Luồng từ catalogue, cấu hình món, giỏ hàng, tải lại trang, checkout đến xác nhận đơn đã được kiểm tra trên trình duyệt Chromium tích hợp của Codex.
 - Storefront đã được đo trên 16 viewport từ 320×568 đến 1920×1080. Admin login được kiểm tra lại ở 390×844, 768×1024, 1366×900 và 1920×1080; không tràn ngang, CTA mobile nằm trong first viewport và console sạch sau reload cuối.
@@ -226,6 +249,7 @@ Dự án chỉ được triển khai local trong lần thay đổi này. Chưa t
 
 ## Tài liệu hoàn thiện
 
+- [`docs/testing/GITHUB_RELEASE_READINESS.md`](docs/testing/GITHUB_RELEASE_READINESS.md): ma trận 12 chức năng, lỗi đã sửa và trạng thái sẵn sàng đưa lên GitHub.
 - [`docs/completion/IMPLEMENTATION_PLAN.md`](docs/completion/IMPLEMENTATION_PLAN.md): audit và kế hoạch thay đổi.
 - [`docs/completion/FEATURE_COMPLETION_MATRIX.md`](docs/completion/FEATURE_COMPLETION_MATRIX.md): trạng thái từng yêu cầu và bằng chứng.
 - [`docs/completion/FINAL_TEST_RESULTS.md`](docs/completion/FINAL_TEST_RESULTS.md): kết quả lệnh, integration, responsive và giới hạn môi trường.

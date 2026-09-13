@@ -22,6 +22,15 @@ export function cleanText(value: unknown, maxLength: number): string {
     .slice(0, maxLength);
 }
 
+export function normalizeSearchText(value: unknown): string {
+  return cleanText(value, 5000)
+    .normalize("NFD")
+    .replace(/\p{M}+/gu, "")
+    .replace(/[đĐ]/gu, "d")
+    .toLocaleLowerCase("vi")
+    .replace(/\s+/gu, " ");
+}
+
 export function validateFeedbackInput(value: unknown): ValidationResult<{
   fullName: string;
   contact: string;

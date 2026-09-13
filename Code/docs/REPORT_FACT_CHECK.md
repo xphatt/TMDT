@@ -20,9 +20,9 @@ Phạm vi: source runtime chính tại `D:\TMDT`, không dùng các bản sao tr
 | Ngôn ngữ | `package.json`, file `.ts`/`.tsx`: TypeScript 5.9.3 | Đã kiểm chứng từ source | Có |
 | App/build framework | `package.json`: Vinext 1.0.0-beta.2, Vite 8.0.13 | Đã kiểm chứng từ source | Có |
 | Runtime production dự kiến | `worker/index.ts`, `vite.config.ts`, `wrangler.jsonc` | Đã kiểm chứng từ source | Có, ghi là dự kiến |
-| Cloudflare D1 | `.openai/hosting.json`, `db/schema.ts`, `drizzle/` | Đã kiểm chứng từ source | Có |
+| Cloudflare D1 | `.hosting/hosting.json`, `db/schema.ts`, `drizzle/` | Đã kiểm chứng từ source | Có |
 | Drizzle ORM | `package.json`, `db/schema.ts`, `drizzle.config.ts` | Đã kiểm chứng từ source | Có |
-| Starter Sites | `.openai/hosting.json`, plugin Sites trong `vite.config.ts` | Đã kiểm chứng từ source | Có ở phần cấu hình |
+| Starter Sites | `.hosting/hosting.json`, file tương thích `.openai/hosting.json`, plugin Sites trong `vite.config.ts` | Đã kiểm chứng từ source | Có ở phần cấu hình |
 | Tailwind CSS | Có dev dependency nhưng UI dùng `globals.css`/`admin.css` tùy chỉnh | Đã kiểm chứng từ source | Có ghi rõ giới hạn |
 | Trang chủ | `app/components/TeaShop.tsx`: `HomeView` | Đã kiểm chứng từ source | Có |
 | Catalogue | `TeaShop.tsx`: `MenuView`; `app/data/products.ts` | Đã kiểm chứng từ source | Có |
@@ -123,7 +123,7 @@ Phạm vi: source runtime chính tại `D:\TMDT`, không dùng các bản sao tr
 - `app/components/TeaShop.tsx`, `app/data/*`, `app/lib/*`, `app/types.ts`
 - `app/api/*`, `app/server/*`, `app/admin/*`
 - `db/schema.ts`, `drizzle/0000_material_maestro.sql`
-- `vite.config.ts`, `worker/index.ts`, `wrangler.jsonc`, `.openai/hosting.json`
+- `vite.config.ts`, `worker/index.ts`, `wrangler.jsonc`, `.hosting/hosting.json`, `.openai/hosting.json` (tương thích Sites)
 - `tests/rendered-html.test.mjs`
 - `docs/ADMIN_TEST_REPORT.md`, `docs/RESPONSIVE_TEST_REPORT.md`, `docs/TEST_PLAN.md`
 - `docs/API_ADMIN.md`, `docs/DATABASE_SCHEMA.md`, `docs/PAYMENT_PROVIDERS.md`

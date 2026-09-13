@@ -100,7 +100,7 @@ Không có giao dịch thật, webhook, mã giao dịch thật hoặc hành vi t
 
 - `worker/index.ts` là Worker entry và chuyển request sang Vinext app router.
 - `vite.config.ts` đang dùng cả Cloudflare Vite plugin lẫn `@openai/sites-vite-plugin`.
-- `.openai/hosting.json` khai báo logical D1 binding `DB`; R2 không dùng.
+- `.hosting/hosting.json` là cấu hình ứng dụng khai báo logical D1 binding `DB`; R2 không dùng. `.openai/hosting.json` được giữ làm lớp tương thích với Sites.
 - Chưa có source config Wrangler chuẩn như `wrangler.jsonc`/`wrangler.toml` để xác định worker name, `workers.dev`, D1 binding và migrations.
 - `app/server/site-config.ts` fallback localhost; production phải inject hostname `workers.dev` thật sau khi được xác nhận.
 - Chưa biết tên Worker và account subdomain thật, nên không được đoán URL production.

@@ -7,9 +7,34 @@ import {
   effectiveProductPrice,
   isCheckoutDemoEnabled,
   isPromotionActive,
+  normalizeSearchText,
   validateFeedbackInput,
   validateReviewInput,
 } from "../app/domain/completion-rules.ts";
+import { loadCart, saveCart } from "../app/lib/storage.ts";
+
+test("Vietnamese search normalization matches accented and unaccented queries", () => {
+  assert.equal(normalizeSearchText("Trà Đào Cam Sả"), "tra dao cam sa");
+  assert.equal(normalizeSearchText("  OOLONG   NƯỚNG  "), "oolong nuong");
+  assert.equal(normalizeSearchText("!!!"), "!!!");
+});
+
+test("cart storage restores the same configured items after a reload boundary", () => {
+  const values = new Map();
+  globalThis.window = {
+    localStorage: {
+      getItem: (key) => values.get(key) ?? null,
+      setItem: (key, value) => values.set(key, value),
+    },
+  };
+  const cart = [{ key: "p4-M-50-vua-pearl", productId: "p4", size: "M", sugar: "50%", ice: "Vừa", toppings: ["pearl"], quantity: 2, unitPrice: 44000 }];
+  try {
+    saveCart(cart);
+    assert.deepEqual(loadCart(), cart);
+  } finally {
+    delete globalThis.window;
+  }
+});
 
 test("feedback validation accepts email or Vietnamese phone and rejects unsafe lengths", () => {
   const valid = validateFeedbackInput({ fullName: "Nguyễn An", contact: "an@example.com", subject: "Góp ý món", message: "Mình muốn góp ý về độ ngọt của món.", clientRequestId: "feedback_001" });

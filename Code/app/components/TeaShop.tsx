@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { ReactNode } from "react";
+import type { ReactNode, SyntheticEvent } from "react";
 import Image from "next/image";
 import { deliveryFee, sizeSurcharge } from "../data/pricing";
 import { categories as staticCategories, formatVnd, products as staticProducts, toppings as staticToppings } from "../data/products";
+import { normalizeSearchText } from "../domain/completion-rules";
 import { CheckoutApiError, confirmOrder, createOrder, getAddressSuggestions, type AddressSuggestion } from "../lib/checkout-api";
 import { loadCart, saveCart, saveOrder } from "../lib/storage";
 import type { CartItem, CategoryId, CheckoutDetails, DrinkSize, IceLevel, MockOrder, Product, SugarLevel, ToppingOption } from "../types";
@@ -17,6 +18,15 @@ type FieldErrors = Partial<Record<keyof CheckoutDetails, string>>;
 
 const sugarLevels: SugarLevel[] = ["0%", "30%", "50%", "70%", "100%"];
 const iceLevels: IceLevel[] = ["Không đá", "Ít đá", "Vừa", "Nhiều đá"];
+const productImageFallback = "/images/about-tea.png";
+
+function handleProductImageError(event: SyntheticEvent<HTMLImageElement>) {
+  const image = event.currentTarget;
+  if (image.dataset.fallbackApplied === "true") return;
+  image.dataset.fallbackApplied = "true";
+  image.srcset = "";
+  image.src = productImageFallback;
+}
 
 type BrandIconName = "arrow" | "check" | "milk-tea" | "fruit-tea" | "macchiato" | "topping";
 
@@ -83,7 +93,7 @@ function Header({ cartCount, onNavigate, onOpenMenu }: { cartCount: number; onNa
 }
 
 function ProductPicture({ product, className = "" }: { product: Product; className?: string }) {
-  return <Image className={className} src={product.image} width={900} height={1100} sizes="(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 34vw" style={{ objectPosition: product.imagePosition }} alt={`Ảnh ${product.name}`} />;
+  return <Image className={className} src={product.image} width={900} height={1100} sizes="(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 34vw" style={{ objectPosition: product.imagePosition }} alt={`Ảnh ${product.name}`} onError={handleProductImageError} />;
 }
 
 function ProductCard({ product, featured = false, onSelect }: { product: Product; featured?: boolean; onSelect: (product: Product) => void }) {
@@ -189,11 +199,11 @@ function MenuView({ catalogueProducts, catalogueCategories, initialCategory, onS
   }, []);
 
   const filtered = useMemo(() => {
-    const normalized = query.trim().toLocaleLowerCase("vi");
+    const normalized = normalizeSearchText(query);
     const matches = catalogueProducts.filter((product) => {
       const categoryMatch = category === "all" || product.category === category;
       const categoryLabel = catalogueCategories.find((item) => item.id === product.category)?.label ?? "";
-      const searchMatch = !normalized || `${product.name} ${product.description} ${product.ingredients} ${categoryLabel}`.toLocaleLowerCase("vi").includes(normalized);
+      const searchMatch = !normalized || normalizeSearchText(`${product.name} ${product.description} ${product.ingredients} ${categoryLabel}`).includes(normalized);
       return categoryMatch && searchMatch;
     });
     return matches.sort((a, b) => sort === "price-asc" ? a.price - b.price : sort === "price-desc" ? b.price - a.price : sort === "name-asc" ? a.name.localeCompare(b.name, "vi") : b.popularity - a.popularity);

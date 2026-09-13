@@ -1,5 +1,7 @@
 # Báo cáo lỗi và khoảng trống — TMDT Trà Sữa Ngon
 
+> Đây là danh sách lỗi tại thời điểm audit ngày 13/09/2026. Trạng thái xử lý mới nhất ngày 14/09/2026 nằm tại [`GITHUB_RELEASE_READINESS.md`](GITHUB_RELEASE_READINESS.md); không dùng bảng lịch sử bên dưới làm trạng thái phát hành hiện tại.
+
 ## 1. Tổng hợp
 
 | Mức độ | Số lượng |

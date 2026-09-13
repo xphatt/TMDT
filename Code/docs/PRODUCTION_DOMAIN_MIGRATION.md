@@ -11,7 +11,7 @@ Production dự kiến: `https://<worker-name>.<account-subdomain>.workers.dev`
 - Dữ liệu đơn hàng/admin dùng Cloudflare D1 qua binding `DB`.
 - Lệnh local: `npm run dev`; build: `npm run build`; local runtime: `npm run start`.
 - `wrangler.jsonc` là cấu hình Cloudflare Workers/D1 độc lập.
-- File tương thích `.openai/hosting.json` và plugin Sites vẫn còn vì đây là starter hiện hữu; không có lệnh Sites/deploy nào được gọi. Việc gỡ dependency này cần phê duyệt riêng.
+- Cấu hình ứng dụng nằm tại `.hosting/hosting.json`. File tương thích `.openai/hosting.json` và plugin Sites vẫn còn vì đây là starter hiện hữu; không có lệnh Sites/deploy nào được gọi. Việc gỡ dependency này cần phê duyệt riêng.
 
 ## Phân tách môi trường
 

@@ -7,6 +7,14 @@ const storefrontCss = await readFile(new URL("../app/globals.css", import.meta.u
 const adminShellSource = await readFile(new URL("../app/admin/components/AdminShell.tsx", import.meta.url), "utf8");
 const adminCss = await readFile(new URL("../app/admin/admin.css", import.meta.url), "utf8");
 
+test("product images include a guarded local fallback", () => {
+  assert.match(
+    storefrontSource,
+    /onError=\{handleProductImageError\}/,
+    "Product images must declare the guarded local fallback handler.",
+  );
+});
+
 test("keyboard focus remains visible and checkout errors receive focus after render", () => {
   assert.match(
     storefrontCss,

@@ -1,7 +1,9 @@
 # Kế hoạch hoàn thiện chức năng — Trà Sữa Ngon
 
+> **Tài liệu lịch sử:** nội dung dưới đây ghi lại baseline ngày 13/09/2026, trước khi repository được tổ chức lại với source canonical tại `D:\TMDT\Code`. Đường dẫn `D:\TMDT\repository` và trạng thái Git trong bảng baseline không còn là trạng thái hiện tại. Xem [`FINAL_TEST_RESULTS.md`](FINAL_TEST_RESULTS.md) và [`../testing/GITHUB_RELEASE_READINESS.md`](../testing/GITHUB_RELEASE_READINESS.md) để biết kết quả sau sửa.
+
 Ngày xác minh: 2026-09-13  
-Phạm vi: `D:\TMDT`  
+Phạm vi lịch sử: `D:\TMDT`
 Nguyên tắc: giữ Vinext/React/Cloudflare Worker/D1, không cài dependency, không deploy, không thay đổi API cũ theo hướng không tương thích.
 
 ## Baseline đã chạy lại

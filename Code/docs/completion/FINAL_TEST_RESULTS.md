@@ -9,9 +9,9 @@ Môi trường: Windows, Node.js 22+, Vinext/Vite, Cloudflare Workers/D1 local, 
 |---|---|---|
 | `npm run lint` | PASS | ESLint toàn project, không tắt rule |
 | `npm run typecheck` | PASS | TypeScript `tsc --noEmit` |
-| `npm run test:unit` | PASS — 5/5 | Feedback, promotion, review, admin permission, server totals/demo guard |
+| `npm run test:unit` | PASS — 7/7 | Tìm kiếm tiếng Việt, local cart storage, feedback, promotion, review, admin permission, server totals/demo guard |
 | `npm run build` | PASS | Production bundle Workers/Vite |
-| `npm test` | PASS — 23/23 tổng cộng | 5 unit + 13 test cũ + 5 integration mới |
+| `npm test` | PASS — 26/26 tổng cộng | 7 unit + 13 test nền + 6 integration/rendered/UI bổ sung |
 | `npm run db:migrate:local` | PASS | Migration `0001` chỉ trên D1 local/test |
 
 Không xóa, bỏ qua hoặc thay thế 13 test nền. Build được chạy trong chính chuỗi `npm test` và chạy lại độc lập theo checklist cuối.

@@ -1,5 +1,7 @@
 # Kết quả kiểm thử dự án TMDT — Trà Sữa Ngon
 
+> Báo cáo này là ảnh chụp audit ngày 13/09/2026. Trạng thái sau sửa ngày 14/09/2026 nằm tại [`GITHUB_RELEASE_READINESS.md`](GITHUB_RELEASE_READINESS.md); các kết luận Git, tìm kiếm không dấu và số lượng test bên dưới được giữ làm bằng chứng lịch sử.
+
 ## 1. Kết luận tổng quan
 
 **Kết luận: CHƯA ĐẦY ĐỦ để bàn giao cuối cùng.**

@@ -24,6 +24,7 @@ __pycache__/
 # misc
 .DS_Store
 *.pem
+~$*.docx
 
 # debug
 npm-debug.log*
@@ -40,6 +41,7 @@ yarn-error.log*
 .vercel
 
 /dist/
+/.vite/
 /.wrangler/
 /outputs/
 /work/

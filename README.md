@@ -1,190 +1,120 @@
-# Trà Sữa Ngon | Website Thương Mại Điện Tử
+# Trà Sữa Ngon — Website thương mại điện tử
 
-Website thương mại điện tử dành cho thương hiệu **Trà Sữa Ngon**, giúp khách hàng khám phá menu, tùy chỉnh đồ uống, thêm vào giỏ hàng và đặt hàng trực tuyến.
+Website bán trà sữa responsive bằng tiếng Việt, gồm storefront cho khách hàng và trang quản trị nội bộ. Source có thể chạy nằm trong thư mục [`Code/`](Code/).
 
-## Mục tiêu dự án
+## Thành viên nhóm
 
-- Xây dựng website bán trà sữa thân thiện, hiện đại và dễ sử dụng.
-- Hoạt động tốt trên điện thoại, tablet, laptop và PC.
-- Hỗ trợ quy trình mua hàng: xem sản phẩm → tùy chỉnh → giỏ hàng → thanh toán → xác nhận đơn.
-- Tạo giao diện có bản sắc riêng, phù hợp khách hàng Việt Nam.
+| TT | Họ tên | Email |
+|---:|---|---|
+| 1 | Phạm Huy Hoàng | [Hoangph0957@ut.edu.vn](mailto:Hoangph0957@ut.edu.vn) |
+| 2 | Đỗ Huỳnh Bình Khôi | [Dhbkhoi@gmail.com](mailto:Dhbkhoi@gmail.com) |
+| 3 | Nguyễn Huy Phú | [phunh310003@ut.edu.vn](mailto:phunh310003@ut.edu.vn) |
+| 4 | Nguyễn Đặng Xuân Phát | [nguyendangxuanphat@gmail.com](mailto:nguyendangxuanphat@gmail.com) |
+| 5 | Tiêu Đình Bảo Khoa | [khoa79074@gmail.com](mailto:khoa79074@gmail.com) |
+| 6 | Trần Tuấn Khang | [08trantuankhang@gmail.com](mailto:08trantuankhang@gmail.com) |
 
-## Chức năng chính
+## Chức năng
 
-### Khách hàng
+- Tìm kiếm tiếng Việt có dấu/không dấu, lọc danh mục và sắp xếp sản phẩm.
+- Tùy chỉnh size, đường, đá, topping; lưu giỏ hàng trên thiết bị.
+- Checkout COD hoặc QR mô phỏng; backend kiểm tra lại giá và chống tạo đơn trùng.
+- Geoapify autocomplete cho địa chỉ Việt Nam qua API server-side.
+- Khuyến mãi, feedback, đánh giá/bình luận và các trang chính sách.
+- Đăng nhập quản trị, catalogue, khuyến mãi, đơn hàng, COD, feedback và kiểm duyệt đánh giá.
+- Giao diện responsive, điều hướng bàn phím, focus rõ và hỗ trợ reduced motion.
 
-- Xem danh sách sản phẩm theo danh mục.
-- Tìm kiếm và lọc sản phẩm.
-- Xem chi tiết đồ uống.
-- Tùy chỉnh size, lượng đường, lượng đá và topping.
-- Thêm, chỉnh sửa số lượng hoặc xóa sản phẩm trong giỏ hàng.
-- Nhập thông tin giao hàng.
-- Gợi ý địa chỉ giao hàng tại Việt Nam.
-- Chọn phương thức thanh toán:
-  - Thanh toán khi nhận hàng.
-  - Chuyển khoản/QR mô phỏng.
-- Xác nhận đơn hàng và nhận mã đơn.
-- Xem trạng thái đơn hàng mô phỏng.
+## Công nghệ
 
-### Quản lý dữ liệu
+- React 19, TypeScript, Vinext và Vite.
+- Cloudflare Workers, D1 và Drizzle ORM.
+- CSS tùy chỉnh; không phụ thuộc UI framework.
+- Node.js 22.13.0 trở lên.
 
-- Quản lý danh sách sản phẩm.
-- Quản lý danh mục, giá bán và topping.
-- Lưu thông tin giỏ hàng.
-- Lưu đơn hàng và trạng thái đơn.
-- Chuẩn bị cấu trúc để tích hợp database và cổng thanh toán thật sau này.
-
-## Công nghệ dự kiến
-
-| Thành phần | Công nghệ |
-|---|---|
-| Frontend | React / Next.js |
-| Ngôn ngữ | TypeScript |
-| Styling | Tailwind CSS hoặc CSS Modules |
-| Quản lý trạng thái | React Context, Zustand hoặc Local Storage |
-| Gợi ý địa chỉ | Geoapify Address Autocomplete API |
-| Dữ liệu ban đầu | Local JSON hoặc Local Storage |
-| Thanh toán | Mô phỏng COD và QR |
-| Database tương lai | MySQL hoặc PostgreSQL |
-| Thanh toán thật tương lai | VNPay, MoMo hoặc ZaloPay |
-
-> Công nghệ sẽ được cập nhật lại theo source code thực tế sau khi hoàn thiện project.
-
-## Cấu trúc thư mục
-
-```text
-src/
-├── app/ hoặc pages/       # Trang và route
-├── components/            # Component tái sử dụng
-├── features/              # Nghiệp vụ sản phẩm, giỏ hàng, thanh toán
-├── data/                  # Dữ liệu sản phẩm mẫu
-├── services/              # Gọi API và xử lý dữ liệu
-├── types/                 # Kiểu dữ liệu TypeScript
-├── hooks/                 # Custom hooks
-├── styles/                # Style toàn cục và design tokens
-└── utils/                 # Hàm tiện ích
-
-public/
-└── images/                # Ảnh sản phẩm và tài nguyên tĩnh
-```
-
-## Cài đặt và chạy dự án
-
-### 1. Clone repository
+## Cài đặt và chạy local
 
 ```bash
-git clone <repository-url>
-cd TMDT
-```
-
-### 2. Cài dependency
-
-```bash
-npm install
-```
-
-### 3. Cấu hình biến môi trường
-
-Tạo file `.env.local` từ `.env.example`:
-
-```bash
-GEOAPIFY_API_KEY=your_geoapify_api_key
-```
-
-> Không commit file `.env` hoặc `.env.local` lên GitHub.
-
-### 4. Chạy môi trường phát triển
-
-```bash
+git clone https://github.com/xphatt/TMDT.git
+cd TMDT/Code
+npm ci
+npm run db:migrate:local
 npm run dev
 ```
 
-Mở trình duyệt tại địa chỉ hiển thị trong terminal, thường là:
+Mở [http://localhost:3000](http://localhost:3000). Để dùng trên điện thoại cùng Wi-Fi, mở địa chỉ `Network` được terminal in ra; không dùng `localhost` trên điện thoại.
 
-```text
-http://localhost:3000
-```
-
-### 5. Build production
+Tạo admin local bằng lệnh tương tác:
 
 ```bash
-npm run build
-npm run start
+npm run admin:create
 ```
 
-## Luồng đặt hàng
+Sau đó đăng nhập tại [http://localhost:3000/admin/login](http://localhost:3000/admin/login).
+
+## Biến môi trường
+
+Trong `Code/`, sao chép `.env.example` thành `.env.local`:
+
+```dotenv
+GEOAPIFY_API_KEY=
+SITE_URL=http://localhost:3000
+STORE_ADDRESS=
+DEMO_MODE=false
+DEMO_ERROR_SCENARIO=
+```
+
+- Không commit `.env` hoặc `.env.local`.
+- `GEOAPIFY_API_KEY` chỉ được đọc ở backend.
+- `STORE_ADDRESS` cần địa chỉ cửa hàng đã xác nhận để bật liên kết Google Maps.
+- Hai biến `DEMO_*` chỉ dùng cho local/test và phải tắt ở production.
+
+## Kiểm tra chất lượng
+
+```bash
+cd Code
+npm run lint
+npm run typecheck
+npm test
+```
+
+Kết quả xác nhận gần nhất: lint PASS, type-check PASS, production build PASS và 26/26 test PASS.
+
+## Cấu trúc repository
 
 ```text
-Chọn sản phẩm
-      ↓
-Tùy chỉnh size, đường, đá, topping
-      ↓
-Thêm vào giỏ hàng
-      ↓
-Nhập thông tin giao hàng
-      ↓
-Chọn phương thức thanh toán
-      ↓
-Xác nhận đơn hàng
-      ↓
-Nhận mã đơn và thông tin đơn hàng
+TMDT/
+├── README.md                 Trang giới thiệu và hướng dẫn nhanh
+└── Code/
+    ├── app/                  Storefront, Admin, API và nghiệp vụ server
+    ├── db/                   Schema D1/Drizzle
+    ├── drizzle/              Migration database
+    ├── public/               Ảnh, font và asset tĩnh
+    ├── scripts/              Migration local và tạo admin
+    ├── tests/                Unit, integration, rendered và UI regression
+    ├── docs/                 Tài liệu kỹ thuật, QA và triển khai
+    ├── worker/               Cloudflare Worker entry
+    ├── .env.example          Mẫu biến môi trường, không chứa secret
+    ├── package.json          Scripts và dependency
+    └── README.md             Tài liệu kỹ thuật đầy đủ
 ```
 
-## Tích hợp API
+## Tài liệu
 
-### Geoapify
+- [README kỹ thuật](Code/README.md)
+- [Hướng dẫn quản trị](Code/docs/ADMIN_GUIDE.md)
+- [API quản trị](Code/docs/API_ADMIN.md)
+- [Cấu trúc database](Code/docs/DATABASE_SCHEMA.md)
+- [Payment Provider](Code/docs/PAYMENT_PROVIDERS.md)
+- [Kiểm tra sẵn sàng GitHub](Code/docs/testing/GITHUB_RELEASE_READINESS.md)
+- [Kết quả kiểm thử cuối](Code/docs/completion/FINAL_TEST_RESULTS.md)
+- [Kế hoạch triển khai public](Code/docs/deployment/PUBLIC_DEPLOYMENT_PLAN.md)
 
-- Geoapify được dùng để gợi ý địa chỉ giao hàng khi khách hàng nhập địa chỉ.
-- API key được lưu trong biến môi trường.
-- Không đưa API key vào frontend source code.
-- Khi API lỗi, khách hàng vẫn có thể nhập địa chỉ thủ công.
+## Giới hạn
 
-### Thanh toán
+- COD và QR hiện chỉ là mô phỏng; dự án không thu tiền thật.
+- VNPay, MoMo và ZaloPay chưa được kết nối, nhưng đã có seam `PaymentProvider` để mở rộng.
+- Production D1, domain, DNS và HTTPS chưa được cấu hình trong repository.
+- Google Maps ở trạng thái cần cấu hình cho đến khi nhóm cung cấp `STORE_ADDRESS`.
 
-Phiên bản hiện tại sử dụng thanh toán mô phỏng:
-
-- Thanh toán khi nhận hàng.
-- Chuyển khoản/QR mô phỏng.
-
-Các cổng thanh toán thật như VNPay, MoMo hoặc ZaloPay sẽ chỉ được tích hợp khi có tài khoản sandbox, API key và yêu cầu nghiệp vụ chính thức.
-
-## Responsive và Accessibility
-
-Website được thiết kế để hoạt động tốt tại các kích thước:
-
-- Mobile: từ 360px.
-- Tablet: từ 768px.
-- Laptop: từ 1024px.
-- Desktop: từ 1440px.
-
-Tiêu chuẩn trải nghiệm:
-
-- Điều hướng bằng bàn phím.
-- Focus state rõ ràng.
-- Màu sắc đủ độ tương phản.
-- Form có validation.
-- Có trạng thái loading, empty và error.
-- Hỗ trợ tiếng Việt có dấu.
-
-## Bảo mật
-
-- Không lưu API key, password hoặc token trong source code.
-- Không commit file môi trường lên GitHub.
-- Không xử lý thanh toán thật ở frontend.
-- Trạng thái thanh toán thật phải được xác minh tại backend qua callback/webhook.
-- Dữ liệu giỏ hàng và đơn hàng phải được kiểm tra trước khi lưu.
-
-## Hướng phát triển
-
-- Đăng ký và đăng nhập tài khoản khách hàng.
-- Trang quản trị sản phẩm và đơn hàng.
-- Database thật cho sản phẩm, khách hàng và đơn hàng.
-- Tích hợp VNPay, MoMo hoặc ZaloPay.
-- Tích hợp đơn vị vận chuyển.
-- Theo dõi trạng thái đơn hàng.
-- Đánh giá sản phẩm và mã giảm giá.
-
-
-## License
+## Giấy phép
 
 Dự án được thực hiện cho mục đích học tập.
