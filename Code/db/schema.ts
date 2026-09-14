@@ -66,6 +66,43 @@ export const payments = sqliteTable("payments", {
   index("idx_payments_status_method").on(table.paymentStatus, table.paymentMethod),
 ]);
 
+export const paymentAttempts = sqliteTable("payment_attempts", {
+  id: text("id").primaryKey(),
+  orderId: text("order_id").notNull().references(() => orders.id, { onDelete: "cascade" }),
+  provider: text("provider").notNull(),
+  environment: text("environment").notNull(),
+  merchantReference: text("merchant_reference").notNull(),
+  providerTransactionId: text("provider_transaction_id"),
+  status: text("status").notNull(),
+  amount: integer("amount").notNull(),
+  currency: text("currency").notNull().default("VND"),
+  checkoutUrl: text("checkout_url"),
+  expiresAt: text("expires_at"),
+  createdAt: text("created_at").notNull(),
+  updatedAt: text("updated_at").notNull(),
+}, (table) => [
+  uniqueIndex("idx_payment_attempts_provider_merchant_ref").on(table.provider, table.merchantReference),
+  uniqueIndex("idx_payment_attempts_provider_transaction").on(table.provider, table.providerTransactionId),
+  index("idx_payment_attempts_order_created").on(table.orderId, table.createdAt),
+  index("idx_payment_attempts_status_updated").on(table.status, table.updatedAt),
+]);
+
+export const paymentWebhookEvents = sqliteTable("payment_webhook_events", {
+  id: text("id").primaryKey(),
+  provider: text("provider").notNull(),
+  providerEventId: text("provider_event_id").notNull(),
+  paymentAttemptId: text("payment_attempt_id").references(() => paymentAttempts.id, { onDelete: "set null" }),
+  payloadHash: text("payload_hash").notNull(),
+  signatureValid: integer("signature_valid", { mode: "boolean" }).notNull(),
+  processingStatus: text("processing_status").notNull(),
+  failureCode: text("failure_code"),
+  receivedAt: text("received_at").notNull(),
+  processedAt: text("processed_at"),
+}, (table) => [
+  uniqueIndex("idx_payment_webhook_provider_event").on(table.provider, table.providerEventId),
+  index("idx_payment_webhook_attempt_received").on(table.paymentAttemptId, table.receivedAt),
+]);
+
 export const adminUsers = sqliteTable("admin_users", {
   id: text("id").primaryKey(),
   loginName: text("login_name").notNull(),

@@ -81,7 +81,7 @@ npm run typecheck
 npm test
 ```
 
-Kết quả xác nhận gần nhất: lint PASS, type-check PASS, production build PASS và 26/26 test PASS.
+Kết quả xác nhận gần nhất: lint PASS, type-check PASS, production build PASS và 33/33 test PASS.
 
 ## Cấu trúc repository
 

@@ -83,6 +83,13 @@ test("server renders the Trà Sữa Ngon storefront", async () => {
   assert.doesNotMatch(html, /Your site is taking shape|codex-preview|react-loading-skeleton/);
 });
 
+test("online payment foundation migration creates attempt and webhook event stores", async () => {
+  const rows = await database.prepare(
+    "SELECT name FROM sqlite_master WHERE type = 'table' AND name IN ('payment_attempts', 'payment_webhook_events') ORDER BY name",
+  ).all();
+  assert.deepEqual(rows.results.map((row) => row.name), ["payment_attempts", "payment_webhook_events"]);
+});
+
 test("robots and sitemap expose the configured local canonical origin", async () => {
   const robotsResponse = await request("/robots.txt");
   assert.equal(robotsResponse.status, 200);
@@ -119,6 +126,38 @@ test("address endpoint rejects short queries and missing configuration safely", 
   assert.equal((await json(missingKeyResponse)).error.code, "address_service_unconfigured");
   if (previousKey === undefined) delete process.env.GEOAPIFY_API_KEY;
   else process.env.GEOAPIFY_API_KEY = previousKey;
+});
+
+test("a complete manual address can create a COD order while Geoapify is unconfigured", async () => {
+  const previousKey = process.env.GEOAPIFY_API_KEY;
+  delete process.env.GEOAPIFY_API_KEY;
+  try {
+    const addressResponse = await request("/api/address-suggestions?q=25%20Nguyen%20Thi%20Minh%20Khai");
+    assert.equal(addressResponse.status, 503);
+
+    const response = await request("/api/orders", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        customer: {
+          fullName: "Nguyễn An",
+          phone: "0901234567",
+          address: "25 Nguyễn Thị Minh Khai, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh",
+          note: "Gọi trước khi giao",
+          payment: "cash",
+        },
+        items: [{ productId: "p1", size: "M", sugar: "50%", ice: "Vừa", toppings: [], quantity: 1, unitPrice: 1 }],
+        clientRequestId: "manual_address_without_geo_001",
+      }),
+    });
+    assert.equal(response.status, 201);
+    const order = (await json(response)).order;
+    assert.equal(order.payment.paymentStatus, "unpaid");
+    assert.equal(order.customer.address, "25 Nguyễn Thị Minh Khai, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh");
+  } finally {
+    if (previousKey === undefined) delete process.env.GEOAPIFY_API_KEY;
+    else process.env.GEOAPIFY_API_KEY = previousKey;
+  }
 });
 
 test("address endpoint filters Vietnam, limits to five and returns minimal fields", async () => {

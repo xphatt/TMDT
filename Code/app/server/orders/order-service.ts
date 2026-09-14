@@ -1,6 +1,7 @@
 import { deliveryFee, sizeSurcharge } from "../../data/pricing";
 import type { CartItem, CheckoutDetails, DrinkSize, IceLevel, SugarLevel } from "../../types";
 import { calculateOrderTotals } from "../../domain/completion-rules";
+import { validateCheckoutDetails } from "../../domain/checkout-validation";
 import { getCatalogueSnapshot } from "../catalogue/catalogue-service";
 import { getPaymentProvider } from "../payments/payment-provider";
 import { getOrderRepository } from "./order-repository-resolver";
@@ -35,14 +36,6 @@ function sanitizeCustomer(value: unknown): CheckoutDetails {
     note: typeof input.note === "string" ? input.note.trim().slice(0, 500) : "",
     payment: input.payment === "bank" ? "bank" : "cash",
   };
-}
-
-function validateCustomer(customer: CheckoutDetails) {
-  const fields: Record<string, string> = {};
-  if (customer.fullName.length < 2) fields.fullName = "Nhập họ tên có ít nhất 2 ký tự.";
-  if (!/^(0|\+84)(3|5|7|8|9)\d{8}$/.test(customer.phone)) fields.phone = "Nhập số điện thoại Việt Nam hợp lệ.";
-  if (customer.address.length < 10) fields.address = "Nhập địa chỉ nhận hàng cụ thể hơn.";
-  return fields;
 }
 
 function normalizeItems(value: unknown, products: Awaited<ReturnType<typeof getCatalogueSnapshot>>["products"], toppings: Awaited<ReturnType<typeof getCatalogueSnapshot>>["toppings"]): CartItem[] {
@@ -93,7 +86,7 @@ export async function createPendingOrder(payload: unknown): Promise<OrderRecord>
     throw new OrderValidationError({ payment: "Phương thức thanh toán không được hỗ trợ." });
   }
   const customer = sanitizeCustomer(input.customer);
-  const fields = validateCustomer(customer);
+  const fields = validateCheckoutDetails(customer);
   if (Object.keys(fields).length) throw new OrderValidationError(fields);
 
   const idempotencyKey = typeof input.clientRequestId === "string" && /^[a-zA-Z0-9_-]{8,100}$/u.test(input.clientRequestId)

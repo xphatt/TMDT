@@ -60,3 +60,10 @@ test("the closed admin drawer is not focusable and mobile navigation targets sta
     "The admin back link must provide a 44px touch target.",
   );
 });
+
+test("checkout separates address lookup availability from manual address validation and reports COD accurately", () => {
+  assert.match(storefrontSource, /placeholder="Ví dụ: 25 Nguyễn Thị Minh Khai, Phường Bến Nghé, Quận 1, TP\. HCM"/);
+  assert.match(storefrontSource, /Gợi ý địa chỉ là tùy chọn/);
+  assert.match(storefrontSource, /Đặt hàng thành công — thanh toán khi nhận hàng/);
+  assert.match(storefrontSource, /if \(submittingRef\.current\) return;/);
+});

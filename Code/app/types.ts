@@ -62,9 +62,17 @@ export type CheckoutDetails = {
 export type MockOrder = {
   id: string;
   createdAt: string;
+  confirmedAt: string | null;
+  status: "pending" | "confirmed";
   customer: CheckoutDetails;
   items: CartItem[];
   subtotal: number;
   deliveryFee: number;
   total: number;
+  payment: {
+    provider: "cash_on_delivery" | "mock_qr";
+    paymentStatus: "unpaid" | "simulation_only";
+    message: string;
+    reference: string | null;
+  };
 };

@@ -12,6 +12,12 @@ import {
   validateReviewInput,
 } from "../app/domain/completion-rules.ts";
 import { loadCart, saveCart } from "../app/lib/storage.ts";
+import { validateCheckoutDetails } from "../app/domain/checkout-validation.ts";
+import {
+  applyVerifiedPaymentEvent,
+  canRetryPayment,
+  verifyHmacSha256,
+} from "../app/server/payments/online-payment.ts";
 
 test("Vietnamese search normalization matches accented and unaccented queries", () => {
   assert.equal(normalizeSearchText("Trà Đào Cam Sả"), "tra dao cam sa");
@@ -68,4 +74,155 @@ test("checkout demo is development-only and defaults off", () => {
   assert.equal(isCheckoutDemoEnabled({ isProduction: false, demoMode: "true", scenario: "checkout_timeout" }), true);
   assert.equal(isCheckoutDemoEnabled({ isProduction: true, demoMode: "true", scenario: "checkout_timeout" }), false);
   assert.equal(isCheckoutDemoEnabled({ isProduction: false, demoMode: "false", scenario: "checkout_timeout" }), false);
+});
+
+test("checkout accepts a complete manual address without a Geoapify selection", () => {
+  const valid = validateCheckoutDetails({
+    fullName: "Nguyễn An",
+    phone: "0901234567",
+    address: "25 Nguyễn Thị Minh Khai, Phường Bến Nghé, Quận 1, Thành phố Hồ Chí Minh",
+    note: "Gọi trước khi giao",
+    payment: "cash",
+  });
+  assert.deepEqual(valid, {});
+
+  const invalid = validateCheckoutDetails({
+    fullName: "Nguyễn An",
+    phone: "0901234567",
+    address: "dsad",
+    note: "",
+    payment: "cash",
+  });
+  assert.match(invalid.address, /số nhà.*đường.*khu vực/i);
+});
+
+test("online payment foundation rejects forged or mismatched webhook data", async () => {
+  const secret = "sandbox-test-secret";
+  const body = JSON.stringify({ transaction: "txn-001", amount: 57000 });
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const signatureBytes = new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(body)));
+  const signature = [...signatureBytes].map((value) => value.toString(16).padStart(2, "0")).join("");
+  assert.equal(await verifyHmacSha256({ secret, payload: body, signature, encoding: "hex" }), true);
+  assert.equal(await verifyHmacSha256({ secret, payload: body, signature: `${signature.slice(0, -2)}00`, encoding: "hex" }), false);
+
+  const attempt = {
+    id: "attempt-001",
+    orderId: "order-001",
+    provider: "sandbox_gateway",
+    merchantReference: "merchant-001",
+    providerTransactionId: "txn-001",
+    amount: 57000,
+    currency: "VND",
+    status: "pending",
+    processedEventIds: [],
+    updatedAt: "2026-09-14T00:00:00.000Z",
+  };
+  assert.throws(() => applyVerifiedPaymentEvent(attempt, {
+    eventId: "event-forged",
+    orderId: "order-001",
+    provider: "sandbox_gateway",
+    merchantReference: "merchant-001",
+    providerTransactionId: "txn-001",
+    amount: 57000,
+    currency: "VND",
+    status: "paid",
+    occurredAt: "2026-09-14T00:01:00.000Z",
+    signatureVerified: false,
+  }), /chữ ký/i);
+  assert.throws(() => applyVerifiedPaymentEvent(attempt, {
+    eventId: "event-wrong-amount",
+    orderId: "order-001",
+    provider: "sandbox_gateway",
+    merchantReference: "merchant-001",
+    providerTransactionId: "txn-001",
+    amount: 1,
+    currency: "VND",
+    status: "paid",
+    occurredAt: "2026-09-14T00:01:00.000Z",
+    signatureVerified: true,
+  }), /số tiền/i);
+  assert.throws(() => applyVerifiedPaymentEvent(attempt, {
+    eventId: "event-wrong-transaction",
+    orderId: "order-001",
+    provider: "sandbox_gateway",
+    merchantReference: "merchant-001",
+    providerTransactionId: "txn-khong-khop",
+    amount: 57000,
+    currency: "VND",
+    status: "paid",
+    occurredAt: "2026-09-14T00:01:00.000Z",
+    signatureVerified: true,
+  }), /giao dịch/i);
+});
+
+test("online payment foundation applies a valid webhook once and exposes retryable terminal states", () => {
+  const attempt = {
+    id: "attempt-002",
+    orderId: "order-002",
+    provider: "sandbox_gateway",
+    merchantReference: "merchant-002",
+    providerTransactionId: "txn-002",
+    amount: 64000,
+    currency: "VND",
+    status: "pending",
+    processedEventIds: [],
+    updatedAt: "2026-09-14T00:00:00.000Z",
+  };
+  const event = {
+    eventId: "event-paid-002",
+    orderId: "order-002",
+    provider: "sandbox_gateway",
+    merchantReference: "merchant-002",
+    providerTransactionId: "txn-002",
+    amount: 64000,
+    currency: "VND",
+    status: "paid",
+    occurredAt: "2026-09-14T00:02:00.000Z",
+    signatureVerified: true,
+  };
+  const first = applyVerifiedPaymentEvent(attempt, event);
+  assert.equal(first.duplicate, false);
+  assert.equal(first.attempt.status, "paid");
+  const duplicate = applyVerifiedPaymentEvent(first.attempt, event);
+  assert.equal(duplicate.duplicate, true);
+  assert.equal(duplicate.attempt.processedEventIds.length, 1);
+  assert.equal(canRetryPayment("pending"), false);
+  for (const status of ["failed", "cancelled", "expired"]) {
+    const terminal = applyVerifiedPaymentEvent({ ...attempt, status: "pending", processedEventIds: [] }, {
+      ...event,
+      eventId: `event-${status}`,
+      status,
+    });
+    assert.equal(terminal.attempt.status, status);
+    assert.equal(canRetryPayment(status), true);
+  }
+  assert.equal(canRetryPayment("paid"), false);
+});
+
+test("browser redirect data cannot mark a pending payment as paid", () => {
+  const attempt = {
+    id: "attempt-redirect",
+    orderId: "order-redirect",
+    provider: "sandbox_gateway",
+    merchantReference: "merchant-redirect",
+    providerTransactionId: "txn-redirect",
+    amount: 72000,
+    currency: "VND",
+    status: "pending",
+    processedEventIds: [],
+    updatedAt: "2026-09-14T00:00:00.000Z",
+  };
+  assert.throws(() => applyVerifiedPaymentEvent(attempt, {
+    eventId: "fake-browser-redirect",
+    orderId: attempt.orderId,
+    provider: attempt.provider,
+    merchantReference: attempt.merchantReference,
+    providerTransactionId: attempt.providerTransactionId,
+    amount: attempt.amount,
+    currency: attempt.currency,
+    status: "paid",
+    occurredAt: "2026-09-14T00:03:00.000Z",
+    signatureVerified: false,
+  }), /chữ ký/i);
+  assert.equal(attempt.status, "pending");
 });

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { deliveryFee, sizeSurcharge } from "../data/pricing";
 import { categories as staticCategories, formatVnd, products as staticProducts, toppings as staticToppings } from "../data/products";
 import { normalizeSearchText } from "../domain/completion-rules";
+import { validateCheckoutDetails } from "../domain/checkout-validation";
 import { CheckoutApiError, confirmOrder, createOrder, getAddressSuggestions, type AddressSuggestion } from "../lib/checkout-api";
 import { loadCart, saveCart, saveOrder } from "../lib/storage";
 import type { CartItem, CategoryId, CheckoutDetails, DrinkSize, IceLevel, MockOrder, Product, SugarLevel, ToppingOption } from "../types";
@@ -351,10 +352,11 @@ function CheckoutView({ items, catalogueProducts, onBack, onSuccess }: { items: 
   const [pendingOrderId, setPendingOrderId] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<AddressSuggestion[]>([]);
   const [addressState, setAddressState] = useState<"idle" | "loading" | "ready" | "empty" | "error">("idle");
-  const [addressMessage, setAddressMessage] = useState("Nhập ít nhất 3 ký tự để xem gợi ý tại Việt Nam.");
+  const [addressMessage, setAddressMessage] = useState("Gợi ý địa chỉ là tùy chọn. Nhập ít nhất 3 ký tự để tìm, hoặc điền đầy đủ địa chỉ thủ công.");
   const skipNextAddressLookup = useRef(false);
   const formRef = useRef<HTMLFormElement>(null);
   const requestIdRef = useRef(crypto.randomUUID());
+  const submittingRef = useRef(false);
   const subtotal = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
   const total = subtotal + deliveryFee;
 
@@ -380,7 +382,8 @@ function CheckoutView({ items, catalogueProducts, onBack, onSuccess }: { items: 
         if (controller.signal.aborted) return;
         setSuggestions([]);
         setAddressState("error");
-        setAddressMessage(error instanceof CheckoutApiError ? error.message : "Không thể tải gợi ý lúc này. Bạn vẫn có thể nhập địa chỉ thủ công.");
+        const serviceMessage = error instanceof CheckoutApiError ? error.message : "Không thể tải gợi ý lúc này.";
+        setAddressMessage(`${serviceMessage} Gợi ý địa chỉ là tùy chọn; bạn vẫn có thể nhập đầy đủ địa chỉ thủ công.`);
       }
     }, 350);
 
@@ -391,6 +394,7 @@ function CheckoutView({ items, catalogueProducts, onBack, onSuccess }: { items: 
   }, [details.address]);
 
   const update = (field: keyof CheckoutDetails, value: string) => {
+    if (pendingOrderId) requestIdRef.current = crypto.randomUUID();
     setDetails((current) => ({ ...current, [field]: value }));
     setErrors((current) => {
       const next = { ...current };
@@ -402,10 +406,11 @@ function CheckoutView({ items, catalogueProducts, onBack, onSuccess }: { items: 
     if (field === "address") {
       setSuggestions([]);
       setAddressState("idle");
-      setAddressMessage(value.trim().length < 3 ? "Nhập ít nhất 3 ký tự để xem gợi ý tại Việt Nam." : "Dừng nhập một chút để tải gợi ý địa chỉ.");
+      setAddressMessage(value.trim().length < 3 ? "Gợi ý địa chỉ là tùy chọn. Nhập số nhà, tên đường và khu vực giao hàng." : "Dừng nhập một chút để tải gợi ý; bạn không bắt buộc phải chọn kết quả.");
     }
   };
   const selectAddress = (suggestion: AddressSuggestion) => {
+    if (pendingOrderId) requestIdRef.current = crypto.randomUUID();
     skipNextAddressLookup.current = true;
     setDetails((current) => ({ ...current, address: suggestion.label }));
     setErrors((current) => {
@@ -420,19 +425,18 @@ function CheckoutView({ items, catalogueProducts, onBack, onSuccess }: { items: 
     setAddressMessage("Đã chọn gợi ý. Bạn vẫn có thể sửa địa chỉ thủ công.");
   };
   const validate = () => {
-    const next: FieldErrors = {};
-    if (details.fullName.trim().length < 2) next.fullName = "Nhập họ tên có ít nhất 2 ký tự.";
-    if (!/^(0|\+84)(3|5|7|8|9)\d{8}$/.test(details.phone.replace(/\s/g, ""))) next.phone = "Nhập số điện thoại Việt Nam hợp lệ.";
-    if (details.address.trim().length < 10) next.address = "Nhập địa chỉ nhận hàng cụ thể hơn.";
+    const next = validateCheckoutDetails(details);
     setErrors(next);
     return Object.keys(next).length === 0;
   };
   const submit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (submittingRef.current) return;
     if (!validate()) {
       window.setTimeout(() => document.getElementById("checkout-errors")?.focus(), 0);
       return;
     }
+    submittingRef.current = true;
     setSubmitting(true);
     setSubmitError("");
     try {
@@ -446,11 +450,14 @@ function CheckoutView({ items, catalogueProducts, onBack, onSuccess }: { items: 
       const order: MockOrder = {
         id: confirmedOrder.id,
         createdAt: confirmedOrder.createdAt,
+        confirmedAt: confirmedOrder.confirmedAt,
+        status: confirmedOrder.status,
         customer: confirmedOrder.customer,
         items: confirmedOrder.items,
         subtotal: confirmedOrder.subtotal,
         deliveryFee: confirmedOrder.deliveryFee,
         total: confirmedOrder.total,
+        payment: confirmedOrder.payment,
       };
       onSuccess(order);
     } catch (error) {
@@ -460,6 +467,7 @@ function CheckoutView({ items, catalogueProducts, onBack, onSuccess }: { items: 
       setSubmitError(error instanceof Error ? error.message : "Không thể tạo đơn mô phỏng. Vui lòng thử lại.");
       window.setTimeout(() => document.getElementById("checkout-submit-error")?.focus(), 0);
     } finally {
+      submittingRef.current = false;
       setSubmitting(false);
     }
   };
@@ -476,7 +484,7 @@ function CheckoutView({ items, catalogueProducts, onBack, onSuccess }: { items: 
           <FormField label="Số điện thoại" id="phone" error={errors.phone}><input id="phone" inputMode="tel" autoComplete="tel" value={details.phone} onChange={(event) => update("phone", event.target.value)} placeholder="090 123 4567" aria-invalid={Boolean(errors.phone)} aria-describedby={errors.phone ? "phone-error" : undefined} /></FormField>
           <FormField label="Địa chỉ nhận hàng" id="address" error={errors.address}>
             <div className="address-lookup">
-              <input id="address" autoComplete="off" value={details.address} onChange={(event) => update("address", event.target.value)} aria-invalid={Boolean(errors.address)} aria-describedby={errors.address ? "address-error address-help" : "address-help"} aria-autocomplete="list" aria-controls="address-suggestions" aria-expanded={addressState === "ready"} role="combobox" />
+              <input id="address" autoComplete="street-address" value={details.address} onChange={(event) => update("address", event.target.value)} placeholder="Ví dụ: 25 Nguyễn Thị Minh Khai, Phường Bến Nghé, Quận 1, TP. HCM" aria-invalid={Boolean(errors.address)} aria-describedby={errors.address ? "address-error address-help" : "address-help"} aria-autocomplete="list" aria-controls="address-suggestions" aria-expanded={addressState === "ready"} role="combobox" />
               <p className={`address-help state-${addressState}`} id="address-help" role="status" aria-live="polite">{addressMessage}</p>
               {addressState === "ready" && <ul className="address-suggestions" id="address-suggestions" role="listbox" aria-label="Gợi ý địa chỉ tại Việt Nam">{suggestions.map((suggestion) => <li key={`${suggestion.latitude}-${suggestion.longitude}`}><button type="button" role="option" aria-selected="false" onClick={() => selectAddress(suggestion)}><strong>{suggestion.label}</strong><small>{[suggestion.district, suggestion.province].filter(Boolean).join(", ")}</small></button></li>)}</ul>}
             </div>
@@ -496,7 +504,8 @@ function FormField({ label, id, error, children }: { label: string; id: string; 
 }
 
 function SuccessView({ order, onHome }: { order: MockOrder; onHome: () => void }) {
-  return <main id="main-content" className="page-main success-page"><div className="success-mark" aria-hidden="true"><BrandIcon name="check" /></div><p className="success-label">Đơn mô phỏng đã được tạo</p><h1>Cảm ơn {order.customer.fullName}</h1><p>Mã đơn <strong>{order.id}</strong> đã được lưu trên thiết bị này. Không có giao dịch thanh toán thật.</p><section className="success-details" aria-label="Chi tiết đơn hàng"><div><span>Thời gian</span><strong>{new Date(order.createdAt).toLocaleString("vi-VN")}</strong></div><div><span>Nhận tại</span><strong>{order.customer.address}</strong></div><div><span>Thanh toán</span><strong>{order.customer.payment === "cash" ? "Tiền mặt khi nhận hàng" : "QR mô phỏng"}</strong></div><div><span>Tổng mẫu</span><strong>{formatVnd(order.total)}</strong></div></section><button className="button button-primary" type="button" onClick={onHome}>Về trang chủ</button></main>;
+  const isCash = order.customer.payment === "cash";
+  return <main id="main-content" className="page-main success-page"><div className="success-mark" aria-hidden="true"><BrandIcon name="check" /></div><p className="success-label">{isCash ? "Đặt hàng thành công — thanh toán khi nhận hàng" : "Đơn QR mô phỏng đã được xác nhận"}</p><h1>Cảm ơn {order.customer.fullName}</h1><p>Mã đơn <strong>{order.id}</strong> đã được lưu. {isCash ? "Đơn chưa thanh toán; bạn thanh toán tiền mặt khi nhận hàng." : "Không có giao dịch hoặc khoản tiền thật nào được ghi nhận."}</p><section className="success-details" aria-label="Chi tiết đơn hàng"><div><span>Thời gian</span><strong>{new Date(order.createdAt).toLocaleString("vi-VN")}</strong></div><div><span>Nhận tại</span><strong>{order.customer.address}</strong></div><div><span>Thanh toán</span><strong>{isCash ? "Tiền mặt khi nhận hàng — chưa thanh toán" : "QR mô phỏng — không phải giao dịch thật"}</strong></div><div><span>Tổng cộng</span><strong>{formatVnd(order.total)}</strong></div></section><button className="button button-primary" type="button" onClick={onHome}>Về trang chủ</button></main>;
 }
 
 function Footer({ onNavigate }: { onNavigate: (view: View) => void }) {

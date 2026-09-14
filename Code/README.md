@@ -88,6 +88,8 @@ DEMO_ERROR_SCENARIO=
 
 Không đặt key trong code frontend. Route server đọc key ở runtime và chỉ trả về dữ liệu địa chỉ tối giản. `.env*` được ignore, riêng `.env.example` được phép lưu cùng source.
 
+Khi không có key, key sai, Geoapify timeout hoặc không trả kết quả, phần gợi ý hiển thị trạng thái dịch vụ riêng nhưng không tạo lỗi cho trường địa chỉ. Khách vẫn có thể nhập số nhà, tên đường và khu vực giao hàng đầy đủ để đặt COD. Không bắt buộc chọn một gợi ý.
+
 Khi build/deploy production được phê duyệt, đặt `SITE_URL=https://<worker-name>.<account-subdomain>.workers.dev`. Không ghi hostname giả vào source; thay hai phần trong dấu `<...>` bằng giá trị Cloudflare thực tế.
 
 `STORE_ADDRESS` phải là địa chỉ cửa hàng đã được xác nhận; nếu để trống, khu vực liên hệ hiển thị trạng thái chưa cấu hình và không tạo liên kết Google Maps. Hai biến `DEMO_*` chỉ dùng cho kịch bản lỗi local/test và phải để tắt trong production.
@@ -98,7 +100,7 @@ Khi build/deploy production được phê duyệt, đặt `SITE_URL=https://<wor
 - Catalogue có tìm kiếm, lọc danh mục, sắp xếp và empty state.
 - Chi tiết món cho phép chọn size, đường, đá, topping và số lượng; giá cập nhật theo lựa chọn.
 - Giỏ hàng có tăng, giảm, xoá và tự lưu trên thiết bị.
-- Checkout có validation tiếng Việt, autocomplete địa chỉ Việt Nam với debounce, tiền mặt và QR mô phỏng.
+- Checkout có validation dùng chung ở client/server, autocomplete địa chỉ Việt Nam với debounce, nhập tay độc lập với Geoapify, chống submit lặp, tiền mặt và QR mô phỏng.
 - Backend đối chiếu sản phẩm, topping và giá nội bộ, ghi đơn `pending` vào D1, sau đó xác nhận thành `confirmed` mà không đánh dấu QR mô phỏng là `paid`.
 - Trang thành công lưu bản sao tối đa 10 đơn gần nhất trên thiết bị để người dùng xem lại trong môi trường local.
 - Khu vực `/admin` có đăng nhập server-side, dashboard, danh sách, tìm kiếm/lọc/phân trang, chi tiết, state transition, xác nhận COD và audit log.
@@ -195,9 +197,11 @@ Giỏ hàng là draft theo thiết bị nên tiếp tục dùng localStorage. D1
 
 ## Giới hạn thanh toán
 
-Checkout chỉ là mô phỏng. Dự án không tích hợp cổng thanh toán, không tạo giao dịch và không thu tiền. Mã QR chỉ là hình minh hoạ trong giao diện và không được dùng để chuyển khoản thật.
+COD đã tạo và xác nhận đơn thật trong D1 local nhưng vẫn ở trạng thái `unpaid` cho tới khi admin xác nhận đã thu tiền ở giai đoạn giao hàng hợp lệ. Mã QR hiện chỉ là hình minh hoạ và không được dùng để chuyển khoản thật.
 
 `PaymentProvider` có hai Adapter: `cash_on_delivery` khởi tạo `unpaid`, còn `mock_qr` luôn giữ `simulation_only`. Admin chỉ có thể xác nhận COD đã thu khi đơn đang giao hoặc đã hoàn tất; thao tác này được audit. Hướng tích hợp VNPay, MoMo và ZaloPay được mô tả trong `docs/PAYMENT_PROVIDERS.md`.
+
+Hạ tầng dùng chung cho cổng online đã có interface chuẩn bị giao dịch, xác minh webhook, state machine chống callback trùng/sai thứ tự và migration bổ sung `payment_attempts` cùng `payment_webhook_events`. Chưa có adapter nhà cung cấp hoặc route thanh toán online công khai vì nhóm chưa chọn VNPay, MoMo hay ZaloPay và chưa cung cấp tài khoản sandbox. Do đó dự án **chưa thể nhận thanh toán online**.
 
 ## Accessibility và responsive
 
@@ -210,7 +214,7 @@ Checkout chỉ là mô phỏng. Dự án không tích hợp cổng thanh toán, 
 
 ## Kiểm thử đã thực hiện
 
-- Production build, lint và type check chạy thành công trên Windows. Bộ cuối có 7 unit test cùng 19 integration/rendered/UI test; toàn bộ 26/26 PASS và giữ nguyên 13 test nền.
+- Production build, lint và type check chạy thành công trên Windows. Bộ hiện tại có 11 unit test cùng 22 integration/rendered/UI test; toàn bộ 33/33 PASS.
 - Test bao phủ Geoapify hợp lệ tại Việt Nam, tối đa 5 kết quả, empty, lỗi mạng, thiếu key, sai key, validation địa chỉ, internal pricing, topping, COD, QR mô phỏng và secret scan trên frontend bundle.
 - Luồng từ catalogue, cấu hình món, giỏ hàng, tải lại trang, checkout đến xác nhận đơn đã được kiểm tra trên trình duyệt Chromium tích hợp của Codex.
 - Storefront đã được đo trên 16 viewport từ 320×568 đến 1920×1080. Admin login được kiểm tra lại ở 390×844, 768×1024, 1366×900 và 1920×1080; không tràn ngang, CTA mobile nằm trong first viewport và console sạch sau reload cuối.
