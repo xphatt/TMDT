@@ -1,0 +1,19 @@
+{
+  "name": "tra-sua-ngon",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "setup": "npm ci --prefix Code",
+    "dev": "npm run dev --prefix Code",
+    "build": "npm run build --prefix Code",
+    "start": "npm run start --prefix Code",
+    "lint": "npm run lint --prefix Code",
+    "typecheck": "npm run typecheck --prefix Code",
+    "test": "npm test --prefix Code",
+    "db:migrate:local": "npm run db:migrate:local --prefix Code",
+    "admin:create": "npm run admin:create --prefix Code"
+  }
+}

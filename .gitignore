@@ -17,6 +17,7 @@
 /.vite/
 /.wrangler/
 /dist/
+/.build/
 /next-env.d.ts
 /tsconfig.tsbuildinfo
 

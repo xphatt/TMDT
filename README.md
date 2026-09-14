@@ -1,6 +1,6 @@
 # Trà Sữa Ngon — Website thương mại điện tử
 
-Website bán trà sữa responsive bằng tiếng Việt, gồm storefront cho khách hàng và trang quản trị nội bộ. Source có thể chạy nằm trong thư mục [`Code/`](Code/).
+Website bán trà sữa responsive bằng tiếng Việt, gồm storefront cho khách hàng và trang quản trị nội bộ. Source chính nằm trong thư mục [`Code/`](Code/); các lệnh ở repository root sẽ tự chuyển tiếp vào thư mục này.
 
 ## Thành viên nhóm
 
@@ -32,15 +32,21 @@ Website bán trà sữa responsive bằng tiếng Việt, gồm storefront cho k
 
 ## Cài đặt và chạy local
 
+Yêu cầu Node.js `22.13.0` trở lên. Từ thư mục gốc `TMDT`, chạy:
+
 ```bash
 git clone https://github.com/xphatt/TMDT.git
-cd TMDT/Code
-npm ci
+cd TMDT
+npm run setup
 npm run db:migrate:local
 npm run dev
 ```
 
-Mở [http://localhost:3000](http://localhost:3000). Để dùng trên điện thoại cùng Wi-Fi, mở địa chỉ `Network` được terminal in ra; không dùng `localhost` trên điện thoại.
+`npm run setup` cài đúng dependency từ lockfile trong `Code/`. Khi terminal hiện dòng `Local`, mở [http://localhost:3000](http://localhost:3000). Giữ terminal này chạy trong lúc sử dụng website.
+
+Bạn vẫn có thể chạy trực tiếp từ `Code/` bằng `npm ci`, `npm run db:migrate:local` và `npm run dev`.
+
+Để dùng trên điện thoại cùng Wi-Fi, mở địa chỉ `Network` được terminal in ra; không dùng `localhost` trên điện thoại.
 
 Tạo admin local bằng lệnh tương tác:
 
@@ -70,7 +76,6 @@ DEMO_ERROR_SCENARIO=
 ## Kiểm tra chất lượng
 
 ```bash
-cd Code
 npm run lint
 npm run typecheck
 npm test
